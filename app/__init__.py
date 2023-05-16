@@ -1,4 +1,4 @@
-from flask import Flask,render_template
+from flask import Flask
 
 app = Flask(__name__)
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 #     return '''
 #     <h1>HELLO FLASK</h1>
 #     '''
+
 
 from app.main.index import main as main 
  
