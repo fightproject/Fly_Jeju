@@ -59,27 +59,33 @@ options.add_argument("--ignore-ssl-errors")
 options.add_argument('window-size=1920x1080') # 브라우저 윈도우 사이즈
 options.add_argument("disable-gpu") # gpu 가속 사용 x
 
-df = pd.DataFrame(columns=['name', 'leavetime', 'reachtime', 'seat', 'charge']) # 저장 데이터프레임
+df = pd.DataFrame(columns=['name', 'leavetime', 'reachtime', 'seat', 'charge', 'date']) # 저장 데이터프레임
 
 # 로드
 driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options) # 드라이버 위치 경로
 
 
-goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=YC' # 빠른 테스트용
+goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=Y' # 빠른 테스트용
 
 
-for asdf in range(1,6):
-    goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-2023070{asdf}?adult=1&fareType=YC'
+for asdf in range(20230701, 20230716):
+    goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{asdf}?adult=1&fareType=Y'
     # goURL = one_wayURL()
     datas = crawl(goURL)
 
-    print(datas)
     for data in datas:
+        data.append(asdf)
         df.loc[len(df)] = data
-        print(data)
+        
+    print(asdf,'데이터 완료')
 
 driver.quit() # driver 종료
 
+# 데이터 처리
+
+df['charge'] = df['charge'].str.replace(',', '').astype('int')
+df['leavetime'] = df['leavetime'].str.replace(':', '').astype('int')
+df['reachtime'] = df['reachtime'].str.replace(':', '').astype('int')
 print(df)
 
 
@@ -103,10 +109,11 @@ client.delete_table(table)
 # 스키마 객체 생성
 schema = [
     bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("leavetime", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("reachtime", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
     bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("charge", "STRING", mode="NULLABLE")
+    bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("date", "INTEGER", mode="NULLABLE")
 ]
 # 테이블 객체 생성
 table = bigquery.Table(table_id, schema=schema)
