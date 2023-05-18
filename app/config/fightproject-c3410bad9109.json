@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fightproject",
+  "private_key_id": "c3410bad910970dbb08dfc36afff97e2dba51fac",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCUyiNfxZ0ycaoE\nqMJha9dPbRukR6KCJwmr3TOKT5kx9KehA/oI+itSWuq4hRPr2rYPCKXsqqK+jVjy\nfuwP3JjAQ31UGKjjuEX0Qe3QcKyqwF3q05ZD+zc7STx7s27oH3OZfZ09ztmUwQoP\nT/sJ/qGTt7CTMy+uii4kHA2I+MF9AAHUcbcBBfr072Jc0nt74uKHwoWPVPtUmf3d\n6wCWsU/dlSfuDZCQdWG0ZHYoIAC8Jxp2SopoXsxya1dxzry+SJ3+mFYhWNv9FaUF\n5nhW1lF3CwwUgkWsLlWrR1mt5xauzbWwTxQYeBjHGYqToFUrRlqRiha9TlTgF1Hp\nVsz5r0LDAgMBAAECggEAQricgUuAEQlYeQtmU0KFRFhEn3gCH0Q7OYcRoDHOnFC+\nRN2gJ5trhtw/SmxewRKMNpSlt0nTfgirfN6+o+RD2V/KWUZPogJV2FEiQCjuvQlT\ndETaqvSB0YOnbD9L+ip0b72dIATcnDCufqxagiJduXyTYYcAGFBdnZK43RXTymXh\n4jfUON/alw5IJ851pLHRGkSazvXfBTQQUU09LJhk6LRFY7UB/VNxCVpIhrhvWl5X\nVEZPck5Cahza8vXmAEgpqf66xicLb9VYUr6hHx12x7e8mnZDbaqV14FzQblQqSuV\nESxLX9Gj1mvpJQT7gIaIDoDsfcK2v8/xcv68UP0DzQKBgQDDj6FibckB7IzL7/TQ\nYAUeYDFRTALMCI9knKnugvhFB1ap15XgvBzg2t3i7YquNUfH0+IuFsYLoyMOrN3N\nU6vpZSun8LaTLets1hWfZsKj3bLiauxpxnlp4M8CAXmy6sAJzf9EGm5CIX//ltMC\nQdYHVQaVhrErvZgW64+RZd/chwKBgQDCxg0Saga6+icSrTdyl1xk04FbvpiSweCS\noaX9p+LBH93y7Dq0XE9sZNuiN0Tl/+Qcr9WTagLzN2R/j/nVb0ViNLtfTQLf1LzI\nf9NkZIX3Ri1QwDaMup5BWBfzKDVboCmUPHCw+enoRvVJEqOey/X4pI+jmRR8mi7V\n2Ya50oaS5QKBgQCuEsu0scSa0dUCMzXXxaDIyRcdJmvW8kexZ0Jb7HjR+RZLWHsw\n8EFEZY3c0VUAfKzIUvKh0+O1uCEcjwNgIXqE5mlVtA7QM6+70VSt7uqSsmTo5gRK\no0Cv3kxlnKqXeB44nAT8ugorE2a8O6TX/YJmRGj38E0Egl8/B69j3SrHQQKBgA4J\nXdnM4E1LR9OVviA4/kSZ5YGqG66/4CJRGfhMyA+o70LZeWWUHXkvT5DCMOnuZg8X\nMOodwraqcEitJJEYIsTwDezRTPq6hxxf8ekTQYBPg2aFY6kCrfMBmUBBzo6a3UQ8\nktZ+PDgsHPM2L6p7Am/31A4zMwHDzspEkewEWwRtAoGAXJVQUMfQ+nzfMUhrAFjO\ndFQJ+izdvybuLjOyPKmflE0b6ISEraceuKtP6moSA9O7c1r0S89oMeSEcE/WzTr4\nEkww5+CdYOZ/FQkgUJCGvx0O25unUdl+NTDNb6H1L6aHc6DVR5RdHbXEpYal5cO/\n5RELHnkIVAw/z8jjTS446Zw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "fly-jeju@fightproject.iam.gserviceaccount.com",
+  "client_id": "105282026932556977626",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/fly-jeju%40fightproject.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
