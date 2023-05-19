@@ -3,16 +3,20 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import pandas as pd
+import datetime
 
+
+
+start = time.time()
 
 def crawl(URL): # 크롤링 함수
     driver.get(URL)
 
-    time.sleep(5) 
+    time.sleep(4) 
 
     for c in range(60): # 정해진 횟수 만큼 Page down을 누른다.
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.PAGE_DOWN)
-        time.sleep(0.3)
+        time.sleep(0.2)
 
     names = driver.find_elements(By.CLASS_NAME, 'name') # 공항 이름
     leave_reach_Times = driver.find_elements(By.CLASS_NAME, 'route_time__-2Z1T') # 출발 시간, 도착 시간
@@ -47,7 +51,18 @@ def crawl(URL): # 크롤링 함수
 
     return result
 
+def asdf(datas, df, airport):
+    for data in datas:
+        data.append(date) # 날짜 컬럼 추가
+        data.append(dayConvert(date)) # 요일 컬럼 추가
+        data.append(airport) # 공항 컬럼 추가
+        df.loc[len(df)] = data
+    return df
 
+def dayConvert(date):
+    day = datetime.date(date//10000, date%10000//100, date%100).weekday()
+    dayDate = '월화수목금토일'
+    return dayDate[day]
 
 
 # 옵션
@@ -59,25 +74,24 @@ options.add_argument("--ignore-ssl-errors")
 options.add_argument('window-size=1920x1080') # 브라우저 윈도우 사이즈
 options.add_argument("disable-gpu") # gpu 가속 사용 x
 
-df = pd.DataFrame(columns=['name', 'leavetime', 'reachtime', 'seat', 'charge', 'date']) # 저장 데이터프레임
+df = pd.DataFrame(columns=['name', 'leavetime', 'reachtime', 'seat', 'charge', 'date', 'day', 'airport']) # 저장 데이터프레임
 
 # 로드
 driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options) # 드라이버 위치 경로
 
 
-goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=Y' # 빠른 테스트용
+# goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=Y' # 빠른 테스트용
 
 
-for asdf in range(20230701, 20230716):
-    goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{asdf}?adult=1&fareType=Y'
-    # goURL = one_wayURL()
-    datas = crawl(goURL)
-
-    for data in datas:
-        data.append(asdf)
-        df.loc[len(df)] = data
+for date in range(20230701, 20230732): # 20230701~20230731까지의 김포 <-> 제주 데이터 크롤링
+    goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{date}?adult=1&fareType=Y'
+    backURL = f'https://flight.naver.com/flights/domestic/CJU-GMP-{date}?adult=1&fareType=Y'
+    goDatas = crawl(goURL)
+    df = asdf(goDatas, df, 'GMP')
+    backDatas = crawl(backURL)
+    df = asdf(backDatas, df, 'CJU')
         
-    print(asdf,'데이터 완료')
+    print(date,'데이터 완료')
 
 driver.quit() # driver 종료
 
@@ -86,6 +100,9 @@ driver.quit() # driver 종료
 df['charge'] = df['charge'].str.replace(',', '').astype('int')
 df['leavetime'] = df['leavetime'].str.replace(':', '').astype('int')
 df['reachtime'] = df['reachtime'].str.replace(':', '').astype('int')
+df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y-%m-%d'))
+df['leavehour'] = df['leavetime'].apply(lambda x : x//100)
+
 print(df)
 
 
@@ -100,20 +117,25 @@ credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = bigquery.Client(credentials = credentials, project = credentials.project_id)
 
 # 테이블 ID
-table_id = "fightproject.test_db.crawltest"
+# table_id = "fightproject.test_db.crawltest" # 테스트 용
+table_id = "fightproject.test_db.airplanecrawl" # 실제 사용
 
-# 테이블 삭제
+# 테이블 삭제, 첫 DB 생성 땐 주석처리
 table = client.get_table(table_id)
 client.delete_table(table)
 
 # 스키마 객체 생성
 schema = [
+    bigquery.SchemaField("date", "DATE", mode="NULLABLE"),
+    bigquery.SchemaField("day", "STRING", mode="NULLABLE"),
     bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("airport", "STRING", mode="NULLABLE"),
     bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
     bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("leavehour", "INTEGER", mode="NULLABLE"),
     bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE"),
-    bigquery.SchemaField("date", "INTEGER", mode="NULLABLE")
+    bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE")
+    
 ]
 # 테이블 객체 생성
 table = bigquery.Table(table_id, schema=schema)
@@ -127,3 +149,7 @@ table = client.get_table(table_id)
 client.load_table_from_dataframe(df, table)
 
 # pyarrow가 필요한듯? pip install pyarrow
+
+end = time.time()
+
+print(f"{end - start:.5f} sec")
