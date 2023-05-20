@@ -450,12 +450,26 @@
                                                     <label for="status-select" class="mr-2">setting</label>
                                                     <select class="custom-select" id="status-select" onchange="filterTable()">
                                                             <option selected>Choose...</option>
-                                                            <option value="1">0~50k</option>
-                                                            <option value="2">50~100k</option>
-                                                            <option value="3">100~150k</option>
-                                                            <option value="4">150~200k</option>
-                                                            <option value="5">200k~</option>
+                                                            <option value="1">0~5만원</option>
+                                                            <option value="2">5~10만원</option>
+                                                            <option value="3">10~15만원</option>
+                                                            <option value="4">15만원~20만원</option>
+                                                            <option value="5">20만원~</option>
                                                         </select>
+                                                </div>
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <label for="status-select" class="mr-2">setting</label>
+                                                        <select class="custom-select" id="status-select2">
+                                                            <option selected>Choose...</option>
+                                                            {% for i in range(1, 32) %}
+                                                                <option value="{{ i }}">{{ i }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                </div>
+                                                <div style="display: flex; justify-content: flex-end;">
+                                                    <div class="form-group mx-sm-3 mb-2" style="text-align: right;">
+                                                        <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -473,18 +487,20 @@
                                                         </div>
                                                     </th>
                                                     <!-- <th>Order ID</th> -->
-                                                    <th>Date / Day</th>
-                                                    <th>Airline</th>
-                                                    <th>Airport</th>
-                                                    <th>Dep_time</th>
-                                                    <th>Arr_time</th>
-                                                    <th>Price</th>
+                                                    <th>날짜</th>
+                                                    <th>요일</th>
+                                                    <th>항공사</th>
+                                                    <th>출발공항</th>
+                                                    <th>출발시각</th>
+                                                    <th>도착시각</th>
+                                                    <th>좌석</th>
+                                                    <th>가격</th>
                                                     <!-- <th style="width: 125px;">Action</th> -->
                                                 </tr>
                                             </thead>
                                             
                                             <tbody id="flight-table-body">
-                                                {% for i in range(data.shape[0]) %}
+                                                {% for i in range(air_data.shape[0]) %}
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -492,40 +508,35 @@
                                                             <label class="custom-control-label" for="customCheck2">&nbsp;</label>
                                                         </div>
                                                     </td>
+                                                    <td>{{air_data['date'][i]}}</td>
+                                                    <td>{{air_data['day'][i]}} </td>
+                                                    <td>{{air_data['name'][i]}}</td>
                                                     <td>
-                                                        <a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">{{ data['date'][loop.index0] }}
-                                                        <small class="text-muted">{{ data['day'][loop.index0]+'요일' }}</small>
-                                                        </a>
+                                                        {{air_data['airport'][i]}}
                                                     </td>
                                                     <td>
-                                                        {{ data['airline'][loop.index0] }}
-                                                      
-                                                           <!-- seat이 특가석, 일반석, 비즈니스석에 따라 색을 다르게 표시. -->
-                                                        {% if data['seat'][loop.index0] == '특가석' %}
-                                                        <h5><span class="badge badge-danger-lighten"><i class="mdi mdi-coin"></i> {{ data['seat'][loop.index0] }}</span></h5>
-                                                        {% elif data['seat'][loop.index0] == '일반석' %}
-                                                        <h5><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> {{ data['seat'][loop.index0] }}</span></h5>
-                                                        {% elif data['seat'][loop.index0] == '비즈니스석' %}
-                                                        <h5><span class="badge badge-primary-lighten"><i class="mdi mdi-coin"></i> {{ data['seat'][loop.index0] }}</span></h5>
+                                                        {{air_data['leavetime'][i]}}
+                                                    </td>
+                                                    <td>
+                                                        {{air_data['reachtime'][i]}}
+                                                    </td>
+                                                    <td>  
+                                                        <!-- seat이 특가석, 일반석, 비즈니스석에 따라 색을 다르게 표시. -->
+                                                        {% if air_data['seat'][i] == '특가석' %}
+                                                        <h5><span class="badge badge-danger-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
+                                                        {% elif air_data['seat'][i] == '일반석' %}
+                                                        <h5><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
+                                                        {% elif air_data['seat'][i] == '비즈니스석' %}
+                                                        <h5><span class="badge badge-primary-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
                                                         {% else %}
-                                                        <h5><span class="badge badge-warning-lighten"><i class="mdi mdi-coin"></i> {{ data['seat'][loop.index0] }}</span></h5>
-                                                        {% endif %}                                                         
+                                                        <h5><span class="badge badge-warning-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
+                                                        {% endif %}     
                                                     </td>
                                                     <td>
-                                                         {{ data['airport'][loop.index0] }}
-                                                    </td>
-                                                    <td>
-                                                        {{ dep_hour[loop.index0]+':'+dep_minute[loop.index0] }}
-                                                    </td>
-                                                    <td>
-                                                        {{ arr_hour[loop.index0]+':'+arr_minute[loop.index0] }}
-                                                    </td>
-                                                    <td>
-                                                        <h4><span class="badge badge-info-lighten">{{ data['price'][loop.index0] }}</span></h4>
+                                                        {{air_data['charge'][i]}}
                                                     </td>
                                                 </tr>
                                                 {% endfor %}
-
                                             </tbody>   
                                         </table>
                                     </div>
@@ -540,7 +551,7 @@
                                     
                                         for (var i = 0; i < rows.length; i++) {
                                             var row = rows[i];
-                                            var priceElement = row.querySelector(".badge-info-lighten");
+                                            var priceElement = row.querySelector("td:last-child");
                                             var price = parseInt(priceElement.innerText);
                                     
                                             if (selectedOption === "") { 
@@ -571,6 +582,130 @@
                     <!-- end row -->
 
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-lg-8">
+                                        <form class="form-inline">
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="status-select" class="mr-2">setting</label>
+                                                <select class="custom-select" id="status-select3" onchange="filterTable3()">
+                                                        <option selected>Choose...</option>
+                                                        <option value="1">0~5만원</option>
+                                                        <option value="2">5~10만원</option>
+                                                        <option value="3">10~15만원</option>
+                                                        <option value="4">15만원~20만원</option>
+                                                        <option value="5">20만원~</option>
+                                                    </select>
+                                            </div>
+                                            <div class="form-group mx-sm-3 mb-2">
+                                                <label for="status-select" class="mr-2">가격설정</label>
+                                                <select class="custom-select" id="status-select4">
+                                                        <option selected>Choose...</option>
+                                                        <option value="1">내림차순</option>
+                                                        <option value="2">오름차순</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- end col-->
+                                </div>
+                                <div style="height: 700px; overflow: auto;">
+                                <div class="table-responsive">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th style="width: 20px;">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                        <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                    </div>
+                                                </th>
+                                                <!-- <th>Order ID</th> -->
+                                                <th>호텔</th>
+                                                <th>주소</th>
+                                                <th>별점</th>
+                                                <th>성급</th>
+                                                <th>가격</th>
+                                                <!-- <th style="width: 125px;">Action</th> -->
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody id="flight-table-body3">
+                                            {% for i in range(hotel_data.shape[0]) %}
+                                            <tr>
+                                                <td>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    {{hotel_data['hotel_name'][i]}}
+                                                </td>
+                                                <td>
+                                                    {{hotel_data['hotel_address'][i]}}
+                                                </td>
+                                                <td>
+                                                    {{hotel_data['hotel_rating'][i]}}
+                                                </td>
+                                                <td>
+                                                    {{hotel_data['hotel_star'][i]}}
+                                                </td>
+                                                <td>
+                                                    {{hotel_data['hotel_price'][i]}}
+                                                </td> 
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>   
+                                    </table>
+                                </div>
+                                </div>
+                                <!-- 옵션선택시 가격에 맞는 행만 출력 -->
+                                <script>
+                                function filterTable3() {
+                                    var selectElement = document.getElementById("status-select3");
+                                    var selectedOption = selectElement.value;
+                                    var tableBody = document.getElementById("flight-table-body3");
+                                    var rows = tableBody.getElementsByTagName("tr");
+                                
+                                    for (var i = 0; i < rows.length; i++) {
+                                        var row = rows[i];
+                                        var priceElement = row.querySelector("td:last-child");
+                                        var price = parseInt(priceElement.innerText);
+                                
+                                        if (selectedOption === "") { 
+                                            // 선택된 옵션이 없을 경우 모든 행을 출력
+                                            row.style.display = "";
+                                        } else if (selectedOption === "1" && (price > 50000)) {
+                                            row.style.display = "none";
+                                        } else if (selectedOption === "2" && (price <= 50000 || price > 100000)) {
+                                            row.style.display = "none";
+                                        } else if (selectedOption === "3" && (price <= 100000 || price > 150000)) {
+                                            row.style.display = "none";
+                                        } else if (selectedOption === "4" && (price <= 150000 || price > 200000)) {
+                                            row.style.display = "none";
+                                        } else if (selectedOption === "5" && (price <= 200000)) {
+                                            row.style.display = "none";
+                                        } else {
+                                            row.style.display = "";
+                                        }
+                                    }
+                                }</script>
+                            </div>
+                            <!-- end card-body-->
+                        </div>
+                        <!-- end card-->
+                    </div>
+                    <!-- end col -->
+                </div>
+                <!-- end row -->
+
+            </div>
+                
                 <!-- End Content -->
 
                 <!-- Footer Start -->
