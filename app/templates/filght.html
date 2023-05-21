@@ -447,7 +447,7 @@
                                         <div class="col-lg-8">
                                             <form class="form-inline">
                                                 <div class="form-group mx-sm-3 mb-2">
-                                                    <label for="status-select" class="mr-2">setting</label>
+                                                    <label for="status-select" class="mr-2">가격 범위 설정</label>
                                                     <select class="custom-select" id="status-select" onchange="filterTable()">
                                                             <option selected>Choose...</option>
                                                             <option value="1">0~5만원</option>
@@ -457,20 +457,21 @@
                                                             <option value="5">20만원~</option>
                                                         </select>
                                                 </div>
-                                                <div class="form-group mx-sm-3 mb-2">
-                                                    <label for="status-select" class="mr-2">setting</label>
+                                                <!-- <div class="form-group mx-sm-3 mb-2">
+                                                    <label for="status-select" class="mr-2">날짜 설정</label>
                                                         <select class="custom-select" id="status-select2">
                                                             <option selected>Choose...</option>
                                                             {% for i in range(1, 32) %}
                                                                 <option value="{{ i }}">{{ i }}</option>
                                                             {% endfor %}
                                                         </select>
-                                                </div>
+                                                </div> -->
                                                 <div style="display: flex; justify-content: flex-end;">
                                                     <div class="form-group mx-sm-3 mb-2" style="text-align: right;">
                                                         <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
                                                     </div>
                                                 </div>
+                                                <!-- <script src="static/assets/js/filght_total_price.js"></script> -->
                                             </form>
                                         </div>
                                         <!-- end col-->
@@ -482,8 +483,8 @@
                                                 <tr>
                                                     <th style="width: 20px;">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                            <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck0">
+                                                            <label class="custom-control-label" for="customCheck0">&nbsp;</label>
                                                         </div>
                                                     </th>
                                                     <!-- <th>Order ID</th> -->
@@ -504,8 +505,8 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                            <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                            <input type="checkbox" name="flight-checkbox" class="custom-control-input" id="customCheck1{{i}}" value="{{ i }}">
+                                                            <label class="custom-control-label" for="customCheck1{{i}}">&nbsp;</label>
                                                         </div>
                                                     </td>
                                                     <td>{{air_data['date'][i]}}</td>
@@ -542,37 +543,10 @@
                                     </div>
                                     </div>
                                     <!-- 옵션선택시 가격에 맞는 행만 출력 -->
-                                    <script>
-                                    function filterTable() {
-                                        var selectElement = document.getElementById("status-select");
-                                        var selectedOption = selectElement.value;
-                                        var tableBody = document.getElementById("flight-table-body");
-                                        var rows = tableBody.getElementsByTagName("tr");
+                                    <script src="static/assets/js/filght_air.js"></script>
                                     
-                                        for (var i = 0; i < rows.length; i++) {
-                                            var row = rows[i];
-                                            var priceElement = row.querySelector("td:last-child");
-                                            var price = parseInt(priceElement.innerText);
-                                    
-                                            if (selectedOption === "") { 
-                                                // 선택된 옵션이 없을 경우 모든 행을 출력
-                                                row.style.display = "";
-                                            } else if (selectedOption === "1" && (price > 50000)) {
-                                                row.style.display = "none";
-                                            } else if (selectedOption === "2" && (price <= 50000 || price > 100000)) {
-                                                row.style.display = "none";
-                                            } else if (selectedOption === "3" && (price <= 100000 || price > 150000)) {
-                                                row.style.display = "none";
-                                            } else if (selectedOption === "4" && (price <= 150000 || price > 200000)) {
-                                                row.style.display = "none";
-                                            } else if (selectedOption === "5" && (price <= 200000)) {
-                                                row.style.display = "none";
-                                            } else {
-                                                row.style.display = "";
-                                            }
-                                        }
-                                    }</script>
                                 </div>
+                                <script src="static/assets/js/filght_total_price.js"></script>
                                 <!-- end card-body-->
                             </div>
                             <!-- end card-->
@@ -590,7 +564,7 @@
                                     <div class="col-lg-8">
                                         <form class="form-inline">
                                             <div class="form-group mx-sm-3 mb-2">
-                                                <label for="status-select" class="mr-2">setting</label>
+                                                <label for="status-select" class="mr-2">가격 범위 설정</label>
                                                 <select class="custom-select" id="status-select3" onchange="filterTable3()">
                                                         <option selected>Choose...</option>
                                                         <option value="1">0~5만원</option>
@@ -599,14 +573,6 @@
                                                         <option value="4">15만원~20만원</option>
                                                         <option value="5">20만원~</option>
                                                     </select>
-                                            </div>
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <label for="status-select" class="mr-2">가격설정</label>
-                                                <select class="custom-select" id="status-select4">
-                                                        <option selected>Choose...</option>
-                                                        <option value="1">내림차순</option>
-                                                        <option value="2">오름차순</option>
-                                                </select>
                                             </div>
                                         </form>
                                     </div>
@@ -619,8 +585,8 @@
                                             <tr>
                                                 <th style="width: 20px;">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                        <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck00">
+                                                        <label class="custom-control-label" for="customCheck00">&nbsp;</label>
                                                     </div>
                                                 </th>
                                                 <!-- <th>Order ID</th> -->
@@ -638,8 +604,8 @@
                                             <tr>
                                                 <td>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2{{i}}">
+                                                        <label class="custom-control-label" for="customCheck2{{i}}">&nbsp;</label>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -665,38 +631,10 @@
                                 </div>
                                 </div>
                                 <!-- 옵션선택시 가격에 맞는 행만 출력 -->
-                                <script>
-                                function filterTable3() {
-                                    var selectElement = document.getElementById("status-select3");
-                                    var selectedOption = selectElement.value;
-                                    var tableBody = document.getElementById("flight-table-body3");
-                                    var rows = tableBody.getElementsByTagName("tr");
-                                
-                                    for (var i = 0; i < rows.length; i++) {
-                                        var row = rows[i];
-                                        var priceElement = row.querySelector("td:last-child");
-                                        var price = parseInt(priceElement.innerText);
-                                
-                                        if (selectedOption === "") { 
-                                            // 선택된 옵션이 없을 경우 모든 행을 출력
-                                            row.style.display = "";
-                                        } else if (selectedOption === "1" && (price > 50000)) {
-                                            row.style.display = "none";
-                                        } else if (selectedOption === "2" && (price <= 50000 || price > 100000)) {
-                                            row.style.display = "none";
-                                        } else if (selectedOption === "3" && (price <= 100000 || price > 150000)) {
-                                            row.style.display = "none";
-                                        } else if (selectedOption === "4" && (price <= 150000 || price > 200000)) {
-                                            row.style.display = "none";
-                                        } else if (selectedOption === "5" && (price <= 200000)) {
-                                            row.style.display = "none";
-                                        } else {
-                                            row.style.display = "";
-                                        }
-                                    }
-                                }</script>
+                                <script src="static/assets/js/filght_hotel.js"></script>
                             </div>
                             <!-- end card-body-->
+                            <script src="static/assets/js/filght_total_price.js"></script>
                         </div>
                         <!-- end card-->
                     </div>

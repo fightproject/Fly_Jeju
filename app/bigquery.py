@@ -6,12 +6,11 @@
 from glob import glob
 from google.cloud import bigquery
 from google.oauth2 import service_account
-import os
-import pandas as pd
 
-def clinet_bigquery(filepath, sql_query):
+
+def clinet_bigquery(filepath, sql_query,i):
     # 서비스 계정 키 JSON 파일 경로
-    key_path = glob(filepath)[0]
+    key_path = glob(filepath)[i]
 
 
     # Credentials 객체 생성
