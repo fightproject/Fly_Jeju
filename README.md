@@ -46,6 +46,7 @@
 ## ✅파이프라인   
 ![Untitled](https://github.com/KIMJEONGSU/Fly_Jeju/assets/23291338/59f186ac-9c1d-49c0-9cda-779b4dc58e9b)
 
+## ✅웹 기능 소개
 ## ✅대시보드
 
 ## ✅결론 및 개선사항
