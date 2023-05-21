@@ -51,7 +51,7 @@ def crawl(URL): # 크롤링 함수
 
     return result
 
-def asdf(datas, df, airport):
+def df_list_append(datas, df, airport):
     for data in datas:
         data.append(date) # 날짜 컬럼 추가
         data.append(dayConvert(date)) # 요일 컬럼 추가
@@ -87,9 +87,9 @@ for date in range(20230701, 20230732): # 20230701~20230731까지의 김포 <-> �
     goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{date}?adult=1&fareType=Y'
     backURL = f'https://flight.naver.com/flights/domestic/CJU-GMP-{date}?adult=1&fareType=Y'
     goDatas = crawl(goURL)
-    df = asdf(goDatas, df, 'GMP')
+    df = df_list_append(goDatas, df, 'GMP')
     backDatas = crawl(backURL)
-    df = asdf(backDatas, df, 'CJU')
+    df = df_list_append(backDatas, df, 'CJU')
         
     print(date,'데이터 완료')
 
