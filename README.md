@@ -44,7 +44,7 @@
 
 
 ## ✅파이프라인   
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fe7353b7-ab35-4f1c-8854-bc122645451c/Untitled.png)
+![Untitled](https://github.com/KIMJEONGSU/Fly_Jeju/assets/23291338/59f186ac-9c1d-49c0-9cda-779b4dc58e9b)
 
 ## ✅대시보드
 
