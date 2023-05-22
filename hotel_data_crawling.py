@@ -19,7 +19,7 @@ options.add_argument("disable-gpu") # gpu 가속 사용 x
 df = pd.DataFrame(columns=['name', 'address', 'rating', 'star', 'price']) # 저장 데이터프레임
 
 driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options)
-for page_num in range(21): #페이지 넘기기
+for page_num in range(60): #페이지 넘기기, 60 이후로 조회 가격이 없다.
     url = f'https://hotels.naver.com/list?placeFileName=place%3AJeju_Province&adultCnt=1&includeTax=false&sortField=popularityKR&sortDirection=descending&pageIndex={page_num}'
     driver.get(url)
     time.sleep(2)
@@ -74,8 +74,8 @@ credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = bigquery.Client(credentials = credentials, project = credentials.project_id)
 
 # 테이블 ID
-table_id = "fightproject.test_db.hoteltest" # 테스트 용
-# table_id = "fightproject.test_db.hotelcrawl" # 실제 사용
+# table_id = "fightproject.test_db.hoteltest" # 테스트 용
+table_id = "fightproject.test_db.hotelcrawl" # 실제 사용
 
 # 테이블 삭제, 첫 DB 생성 땐 주석처리
 table = client.get_table(table_id)

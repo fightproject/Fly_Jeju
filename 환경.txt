@@ -1,1 +1,5 @@
 크롬 빌드 112.0.5615.50
+
+pip install selenium
+pip install pyarrow
+pip install --upgrade google-cloud-bigquery
