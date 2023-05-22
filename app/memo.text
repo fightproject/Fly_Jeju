@@ -1,0 +1,43 @@
+
+@app.route('/')
+def calendar():
+
+    sql = '''
+    select date, day, price
+    from test_db.airplane 
+    limit 10
+    '''
+    data_list = bigqueryCall(sql)
+    print(data_list)
+
+    # 데이터 프레임을 JSON으로 변환
+    json_data = data_list.to_json(orient='records')
+    parsed_data = json.loads(json_data)
+    
+    print("데이터타입 : ", type(json_data))
+    for airplane in parsed_data:
+        print(airplane)
+    print("===================================== airplane 끝 =====================================")
+
+    return render_template('main.html',data_list=data_list, parsed_data=parsed_data)
+
+<script>
+    var parsed_data = JSON.parse('{{ parsed_data | tojson | safe }}');
+    console.log(parsed_data); // JavaScript 파일로 데이터 전달
+</script>
+
+// Ajax를 사용하여 데이터 받아오기
+l.ajax({
+    url: '/',
+    method: 'GET',
+    // dataType: 'json',
+    success: function(response) {
+        var events = response.parsed_data; // 받아온 데이터를 이용하여 이벤트 배열 생성
+        console.log(events);
+        a.$calendarObj.setOption('events', events);
+    },
+    error: function() {
+        // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
+        console.log('Failed to fetch events data.');
+    }
+});
