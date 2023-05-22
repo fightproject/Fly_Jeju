@@ -103,7 +103,7 @@ driver.quit() # driver 종료
 df['charge'] = df['charge'].str.replace(',', '').astype('int')
 df['leavetime'] = df['leavetime'].str.replace(':', '').astype('int')
 df['reachtime'] = df['reachtime'].str.replace(':', '').astype('int')
-df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y-%m-%d'))
+df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
 df['leavehour'] = df['leavetime'].apply(lambda x : x//100)
 
 

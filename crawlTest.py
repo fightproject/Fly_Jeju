@@ -83,7 +83,7 @@ driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options) # 드라
 # goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=Y' # 빠른 테스트용
 
 
-for date in range(20230701, 20230706): # 20230701~20230731까지의 김포 <-> 제주 데이터 크롤링
+for date in range(20230801, 20230802): # 20230701~20230731까지의 김포 <-> 제주 데이터 크롤링
     goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{date}?adult=1&fareType=Y'
     backURL = f'https://flight.naver.com/flights/domestic/CJU-GMP-{date}?adult=1&fareType=Y'
     goDatas = crawl(goURL)
@@ -100,7 +100,7 @@ driver.quit() # driver 종료
 df['charge'] = df['charge'].str.replace(',', '').astype('int')
 df['leavetime'] = df['leavetime'].str.replace(':', '').astype('int')
 df['reachtime'] = df['reachtime'].str.replace(':', '').astype('int')
-df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y-%m-%d'))
+df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
 df['leavehour'] = df['leavetime'].apply(lambda x : x//100)
 
 print(df)
@@ -111,6 +111,8 @@ from google.oauth2 import service_account
 
 # 서비스 계정 인증 정보가 담긴 JSON 파일 경로
 KEY_PATH = "./config/fightproject-8809f75d4a86.json"
+
+
 # Credentials 객체 생성
 credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 # 빅쿼리 클라이언트 객체 생성
@@ -120,27 +122,27 @@ client = bigquery.Client(credentials = credentials, project = credentials.projec
 table_id = "fightproject.test_db.crawltest" # 테스트 용
 # table_id = "fightproject.test_db.airplanecrawl" # 실제 사용
 
-# # 테이블 삭제, 첫 DB 생성 땐 주석처리
-# table = client.get_table(table_id)
-# client.delete_table(table)
+# 테이블 삭제, 첫 DB 생성 땐 주석처리
+table = client.get_table(table_id)
+client.delete_table(table)
 
-# # 스키마 객체 생성
-# schema = [
-#     bigquery.SchemaField("date", "DATE", mode="NULLABLE"),
-#     bigquery.SchemaField("day", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("airport", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
-#     bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
-#     bigquery.SchemaField("leavehour", "INTEGER", mode="NULLABLE"),
-#     bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE")
+# 스키마 객체 생성
+schema = [
+    bigquery.SchemaField("date", "DATE", mode="NULLABLE"),
+    bigquery.SchemaField("day", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("airport", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("leavehour", "INTEGER", mode="NULLABLE"),
+    bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
+    bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE")
     
-# ]
-# # 테이블 객체 생성
-# table = bigquery.Table(table_id, schema=schema)
-# # 테이블 생성
-# table = client.create_table(table)
+]
+# 테이블 객체 생성
+table = bigquery.Table(table_id, schema=schema)
+# 테이블 생성
+table = client.create_table(table)
 
 
 # 테이블 객체 생성

@@ -6,6 +6,9 @@ import pandas as pd
 import datetime
 
 
+# 서비스 계정 인증 정보가 담긴 JSON 파일 경로
+KEY_PATH = "./config/fightproject-8809f75d4a86.json"
+
 
 start = time.time()
 
@@ -100,7 +103,7 @@ driver.quit() # driver 종료
 df['charge'] = df['charge'].str.replace(',', '').astype('int')
 df['leavetime'] = df['leavetime'].str.replace(':', '').astype('int')
 df['reachtime'] = df['reachtime'].str.replace(':', '').astype('int')
-df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y-%m-%d'))
+df['date'] = df['date'].apply(lambda x: pd.to_datetime(str(x), format='%Y%m%d'))
 df['leavehour'] = df['leavetime'].apply(lambda x : x//100)
 
 print(df)
@@ -109,8 +112,7 @@ print(df)
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-# 서비스 계정 인증 정보가 담긴 JSON 파일 경로
-KEY_PATH = "./config/빅쿼리 개인키 파일.json"
+
 # Credentials 객체 생성
 credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 # 빅쿼리 클라이언트 객체 생성
