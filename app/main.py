@@ -29,7 +29,10 @@ def demo():
 
         return jsonify(json_data)
 
-car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
+
+@app.route('/filght', methods=['GET','POST'])
+def get_flight():
+    car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
                                     CAST(AVG(CAST(regular_price AS INT)) AS INT) AS avg_regular_price,
                                     CAST(AVG(CAST(discounted_price AS INT)) AS INT) AS avg_discounted_price
                                     FROM `fightproject.test_db.car`
@@ -37,16 +40,10 @@ car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
                                     GROUP BY carname, oiltype, seater, avg_year
                                     ORDER BY avg_discounted_price, avg_regular_price;''') 
     # 호텔데이터불러오기(기본)
-hotel_data = clinet_bigquery('''SELECT * FROM test_db.hotelcrawl
+    hotel_data = clinet_bigquery('''SELECT * FROM test_db.hotelcrawl
                                     where rating != '평점없음' and star is not null
                                     order by star desc, price asc
                                     LIMIT 500;''') 
-
-
-
-@app.route('/filght', methods=['GET','POST'])
-def get_flight():
-
     
     if request.method=='POST':
         selected_date = request.json.get('date')
