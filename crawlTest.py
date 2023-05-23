@@ -83,7 +83,7 @@ driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options) # 드라
 # goURL = 'https://flight.naver.com/flights/domestic/GMP-CJU-20230601?adult=1&fareType=Y' # 빠른 테스트용
 
 
-for date in range(20230801, 20230802): # 20230701~20230731까지의 김포 <-> 제주 데이터 크롤링
+for date in range(20230801, 20230832): # 20230701~20230731까지의 김포 <-> 제주 데이터 크롤링
     goURL = f'https://flight.naver.com/flights/domestic/GMP-CJU-{date}?adult=1&fareType=Y'
     backURL = f'https://flight.naver.com/flights/domestic/CJU-GMP-{date}?adult=1&fareType=Y'
     goDatas = crawl(goURL)
@@ -119,30 +119,30 @@ credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = bigquery.Client(credentials = credentials, project = credentials.project_id)
 
 # 테이블 ID
-table_id = "fightproject.test_db.crawltest" # 테스트 용
-# table_id = "fightproject.test_db.airplanecrawl" # 실제 사용
+# table_id = "fightproject.test_db.crawltest" # 테스트 용
+table_id = "fightproject.test_db.airplanecrawl" # 실제 사용
 
-# 테이블 삭제, 첫 DB 생성 땐 주석처리
-table = client.get_table(table_id)
-client.delete_table(table)
+# # 테이블 삭제, 첫 DB 생성 땐 주석처리
+# table = client.get_table(table_id)
+# client.delete_table(table)
 
-# 스키마 객체 생성
-schema = [
-    bigquery.SchemaField("date", "DATE", mode="NULLABLE"),
-    bigquery.SchemaField("day", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("airport", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
-    bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
-    bigquery.SchemaField("leavehour", "INTEGER", mode="NULLABLE"),
-    bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
-    bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE")
+# # 스키마 객체 생성
+# schema = [
+#     bigquery.SchemaField("date", "DATE", mode="NULLABLE"),
+#     bigquery.SchemaField("day", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("name", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("airport", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("leavetime", "INTEGER", mode="NULLABLE"),
+#     bigquery.SchemaField("reachtime", "INTEGER", mode="NULLABLE"),
+#     bigquery.SchemaField("leavehour", "INTEGER", mode="NULLABLE"),
+#     bigquery.SchemaField("seat", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("charge", "INTEGER", mode="NULLABLE")
     
-]
-# 테이블 객체 생성
-table = bigquery.Table(table_id, schema=schema)
-# 테이블 생성
-table = client.create_table(table)
+# ]
+# # 테이블 객체 생성
+# table = bigquery.Table(table_id, schema=schema)
+# # 테이블 생성
+# table = client.create_table(table)
 
 
 # 테이블 객체 생성
