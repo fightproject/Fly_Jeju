@@ -438,7 +438,7 @@
                         </div>
                     </div>
                     <!-- end page title -->
-
+                    <!-- 항공권  -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -448,18 +448,7 @@
                                           <form class="form-inline">
                                             <div class="form-group mx-sm-3 mb-2">
                                               <label for="selectedDate" class="mr-2">날짜</label>
-                                              <input type="date" id="selectedDate" value="2023-07-01" onchange="fetchData()">
-                                            </div>
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <label for="status-select" class="mr-2">가격</label>
-                                                <select class="custom-select" id="status-select">
-                                                        <option selected>Choose...</option>
-                                                        <option value="1">0~5만원</option>
-                                                        <option value="2">5~10만원</option>
-                                                        <option value="3">10~15만원</option>
-                                                        <option value="4">15만원~20만원</option>
-                                                        <option value="5">20만원~</option>
-                                                    </select>
+                                              <input type="date" id="selectedDate" value="2023-07-01">
                                             </div>
                                             <div class="form-group mx-sm-3 mb-2">
                                                 <label for="status-select" class="mr-2">출발지</label>
@@ -469,11 +458,12 @@
                                                         <option value="2">제주</option>
                                                     </select>
                                             </div>
-                                            <!-- <div style="display: flex; justify-content: flex-end;">
+                                            <div style="display: flex; justify-content: flex-end;">
                                                 <div class="form-group mx-sm-3 mb-2" style="text-align: right;">
                                                     <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
                                                 </div>
-                                            </div> -->
+                                            </div>
+                                        
                                           </form>
                                         </div>
                                       </div>
@@ -503,7 +493,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" name="flight-checkbox" class="custom-control-input" id="customCheck1{{loop.index0}}" value="{{ loop.index }}">
+                                                            <input type="checkbox" name="flight-checkbox1" class="custom-control-input" id="customCheck1{{loop.index0}}">
                                                             <label class="custom-control-label" for="customCheck1{{loop.index0}}">&nbsp;</label>
                                                         </div>
                                                     </td>
@@ -517,12 +507,15 @@
                                                     <td>{{ data['charge'] }}</td>
                                                 </tr>
                                                 {% endfor %}
+                                            <script src="static/assets/js/filght_month.js"></script>
+                                            <script src="static/assets/js/filght_total_price.js"></script>
                                           </tbody>
                                         </table>
                                       </div>
                                     </div>
+                                
                                 </div>
-                            <script src="static/assets/js/filght_month.js"></script>
+                            
                                 <!-- end card-body-->
                             </div>
                             <!-- end card-->
@@ -530,6 +523,7 @@
                         <!-- end col -->
                     </div>
                     <!-- end row -->
+                    <!-- 호텔  -->
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -586,7 +580,7 @@
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck2{{loop.index}}">
+                                                            <input type="checkbox" name="flight-checkbox2" class="custom-control-input" id="customCheck2{{loop.index}}">
                                                             <label class="custom-control-label" for="customCheck2{{loop.index}}">&nbsp;</label>
                                                         </div>
                                                     </td>
@@ -597,92 +591,90 @@
                                                     <td>{{data['price']}} </td> 
                                                 </tr>
                                                 {% endfor %}
+                                                <script src="static/assets/js/filght_total_price.js"></script>
                                             </tbody>   
                                         </table>
                                     </div>
                                     </div>
-                                    <!-- 옵션선택시 맞는 행만 출력 -->
-                                    <script src="static/assets/js/filght_hotel.js"></script>
-                                    <!-- 총합에 호텔값 합산 -->
-                                    <script src="static/assets/js/filght_total_price.js"></script>
                                 </div>
                                 <!-- end card-body-->
-                        
                             </div>
                             <!-- end card-->
                         </div>
                         <!-- end col -->
                     </div>
-                    <!-- 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카  -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div style="height: 700px; overflow: auto;">
-                                <div class="table-responsive">
-                                    <table class="table table-centered mb-0">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th style="width: 20px;">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                        <label class="custom-control-label" for="customCheck3">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <!-- <th>Order ID</th> -->
-                                                <th>차종류</th>                                        
-                                                <th>주유 종류</th>
-                                                <th>탑승 가능 수</th>
-                                                <th>생산일자</th>
-                                                <th>가격</th>
-                                                <th>할인가</th>
-                                                <!-- <th style="width: 125px;">Action</th> -->
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody id="flight-table-body4">
-                                            {% for data in car_list %}
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input customCheck3" id="customCheck3{{i}}">
-                                                        <label class="custom-control-label" for="customCheck3{{i}}">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {{data['carname']}}
-                                                </td>
-                                                <td>
-                                                    {{data['oiltype']}}
-                                                </td>
-                                                <td>
-                                                    {{data['seater']}}
-                                                </td>
-                                                <td>
-                                                    {{data['avg_year']}}
-                                                </td>
-                                                <td>
-                                                    {{data['avg_regular_price']}}
-                                                </td>
-                                                <td>
-                                                    {{data['avg_discounted_price']}}
-                                                </td> 
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>   
-                                    </table>
+                    <!-- 렌터카  -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div style="height: 700px; overflow: auto;">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <!-- <th>Order ID</th> -->
+                                                        <th>차종류</th>                                        
+                                                        <th>주유 종류</th>
+                                                        <th>탑승 가능 수</th>
+                                                        <th>생산일자</th>
+                                                        <th>가격</th>
+                                                        <th>할인가</th>
+                                                        <!-- <th style="width: 125px;">Action</th> -->
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody id="flight-table-body4">
+                                                    {% for data in car_list %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="flight-checkbox3" class="custom-control-input" id="customCheck3{{loop.index}}">
+                                                                <label class="custom-control-label" for="customCheck3{{loop.index}}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {{data['carname']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['oiltype']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['seater']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_year']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_regular_price']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_discounted_price']}}
+                                                        </td> 
+                                                    </tr>
+                                                    {% endfor %}
+                                                    <script src="static/assets/js/filght_total_price.js"></script>
+                                                </tbody>   
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
+                                <!-- end card-body-->
                             </div>
-                            <!-- 총합에 렌터카 합산 -->
-                            <script src="static/assets/js/filght_total_price.js"></script>
+                            <!-- end card-->
                         </div>
-                        <!-- end card-body-->
+                        <!-- end col -->
                     </div>
-                    <!-- end card-->
                 </div>
-                <!-- end col -->
-            </div>
-        </div>
+
+           
                 <!-- End Content -->
 
                 <!-- Footer Start -->

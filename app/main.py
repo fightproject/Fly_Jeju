@@ -32,6 +32,7 @@ def demo():
 
 @app.route('/filght', methods=['GET','POST'])
 def get_flight():
+    global total_amount
     car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
                                     CAST(AVG(CAST(regular_price AS INT)) AS INT) AS avg_regular_price,
                                     CAST(AVG(CAST(discounted_price AS INT)) AS INT) AS avg_discounted_price
@@ -48,13 +49,21 @@ def get_flight():
     if request.method=='POST':
         selected_date = request.json.get('date')
 
+        # 항공권과 호텔, 렌터카에 대한 총합 보여주기위함.
+        selected_air = request.form.getlist('customCheck1')
+        selected_hotels = request.form.getlist('customCheck2')
+        selected_car = request.form.getlist('customCheck3')
+        total_amount = sum(float(air_data[int(index)]['charge']) for index in selected_air) + \
+                    sum(float(hotel_data[int(index)]['price']) for index in selected_hotels) + \
+                    sum(float(car_data[int(index)]['avg_discounted_price']) for index in selected_car)
+
     # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
         sql = f'''
             SELECT date, day, name, airport, leavetime, reachtime, seat,charge
             FROM test_db.airplanecrawl
             WHERE date = '{selected_date}'
             ORDER BY charge ASC
-            LIMIT 100;
+            LIMIT 50;
             '''
     else:
     # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
@@ -73,7 +82,7 @@ def get_flight():
     
     if request.method == 'POST':
         # air_data를 JSON 형식으로 변환하여 반환
-        return jsonify(air_list)
+        return jsonify(air_list=air_list, hotel_list=hotel_list, car_list=car_list)
     else:
         # HTML 템플릿 렌더링 및 반환
         return render_template('filght.html', 
