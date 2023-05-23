@@ -20,9 +20,10 @@ def demo():
         return "POST 요청을 받았습니다"
     else:
         sql = '''
-            SELECT date, charge
-            FROM test_db.airplanecrawl 
-            LIMIT 50
+            SELECT date, CAST(AVG(charge) AS INT64) AS avgcharge, MIN(charge) AS mincharge, MAX(charge) AS maxcharge
+            FROM test_db.airplanecrawl
+            GROUP BY date
+            LIMIT 100;
         '''
         data_list = clinet_bigquery('./app/config/*.json',sql,0)
         json_data = data_list.to_json(orient='records')

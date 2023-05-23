@@ -111,13 +111,24 @@
                             var airplane = JSON.parse(data);
                             jQuery.each(airplane, function() {
                                 defaultEvents.push({
-                                    title: this.charge,
+                                    title: Number(this.maxcharge).toLocaleString() + "원",
                                     start: dateformat(this.date),
-                                    end: dateformat(this.date)
+                                    end: dateformat(this.date),
+                                    color: "#35b8e0"
+                                }, {
+                                    title: Number(this.avgcharge).toLocaleString() + "원",
+                                    start: dateformat(this.date),
+                                    end: dateformat(this.date),
+                                    color: "#f9c851"
+                                }, {
+                                    title: Number(this.mincharge).toLocaleString() + "원",
+                                    start: dateformat(this.date),
+                                    end: dateformat(this.date),
+                                    color: "#ff5b5b"
                                 });
                             });
                             successCallback(defaultEvents);
-                            console.log("defaultEvents", defaultEvents);
+                            // console.log("defaultEvents", defaultEvents);
                         },
                         error: function() {
                             // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
