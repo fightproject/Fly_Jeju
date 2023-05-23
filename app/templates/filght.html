@@ -451,6 +451,17 @@
                                               <input type="date" id="selectedDate" value="2023-07-01">
                                             </div>
                                             <div class="form-group mx-sm-3 mb-2">
+                                                <label for="status-select" class="mr-2">가격</label>
+                                                <select class="custom-select" id="status-select">
+                                                        <option selected>Choose...</option>
+                                                        <option value="1">0~5만원</option>
+                                                        <option value="2">5~10만원</option>
+                                                        <option value="3">10~15만원</option>
+                                                        <option value="4">15만원~20만원</option>
+                                                        <option value="5">20만원~</option>
+                                                    </select>
+                                            </div>
+                                            <div class="form-group mx-sm-3 mb-2">
                                                 <label for="status-select" class="mr-2">출발지</label>
                                                 <select class="custom-select" id="status-select2">
                                                         <option selected>Choose...</option>
@@ -509,6 +520,7 @@
                                                 {% endfor %}
                                             <script src="static/assets/js/filght_month.js"></script>
                                             <script src="static/assets/js/filght_total_price.js"></script>
+                                            <script src="static/assets/js/filght_air.js"></script>
                                           </tbody>
                                         </table>
                                       </div>
@@ -591,6 +603,7 @@
                                                     <td>{{data['price']}} </td> 
                                                 </tr>
                                                 {% endfor %}
+                                                <script src="static/assets/js/filght_hotel.js"></script>
                                                 <script src="static/assets/js/filght_total_price.js"></script>
                                             </tbody>   
                                         </table>

@@ -1,18 +1,15 @@
+
 function filterTable_air() {
     var selectElement = document.getElementById("status-select");
     var selectedOption = selectElement.value;
     var selectBox = document.getElementById("status-select2");
-    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    var selectedValue = selectBox.value;  // 수정: selectedBox.selectedIndex 대신 selectedBox.value 사용
     var tableBody = document.getElementById("flight-table-body");
     var rows = tableBody.getElementsByTagName("tr");
   
-    Array.from(rows).sort(function(a, b) {
-        var priceA = parseInt(a.querySelector("td:last-child").innerText);
-        var priceB = parseInt(b.querySelector("td:last-child").innerText);
-        return priceA - priceB;
-        }).forEach(function(row) {
+    Array.from(rows).forEach(function(row) {
         tableBody.appendChild(row);
-        });
+    });
         
     for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
@@ -26,32 +23,32 @@ function filterTable_air() {
 
         // Check if the selected price option matches
         if (selectedOption !== "Choose...") {
-        priceMatch =
-            (selectedOption === "1" && price > 0 && price <= 50000) ||
-            (selectedOption === "2" && price > 50000 && price <= 100000) ||
-            (selectedOption === "3" && price > 100000 && price <= 150000) ||
-            (selectedOption === "4" && price > 150000 && price <= 200000) ||
-            (selectedOption === "5" && price > 200000);
+            priceMatch =
+                (selectedOption === "1" && price > 0 && price <= 50000) ||
+                (selectedOption === "2" && price > 50000 && price <= 100000) ||
+                (selectedOption === "3" && price > 100000 && price <= 150000) ||
+                (selectedOption === "4" && price > 150000 && price <= 200000) ||
+                (selectedOption === "5" && price > 200000);
         }
 
         // Check if the selected departure option matches
         if (selectedValue !== "Choose...") {
-        departureMatch =
-            (selectedValue === "1" && departure === "GMP") || (selectedValue === "2" && departure === "CJU");
+            departureMatch =
+                (selectedValue === "1" && departure === "GMP") || (selectedValue === "2" && departure === "CJU");
         }
 
         // Show or hide rows based on the matches
         if (priceMatch && departureMatch) {
-        row.style.display = "";
+            row.style.display = "";
         } else {
-        row.style.display = "none";
+            row.style.display = "none";
         }
     }
 }
-        
+
 // 이벤트 핸들러 등록
 var selectElement = document.getElementById("status-select");
-selectElement.addEventListener("change", filterTable);
+selectElement.addEventListener("change", filterTable_air);
 
 var selectBox = document.getElementById("status-select2");
-selectBox.addEventListener("change", filterTable);
+selectBox.addEventListener("change", filterTable_air);

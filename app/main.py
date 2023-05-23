@@ -50,12 +50,12 @@ def get_flight():
         selected_date = request.json.get('date')
 
         # 항공권과 호텔, 렌터카에 대한 총합 보여주기위함.
-        selected_air = request.form.getlist('customCheck1')
-        selected_hotels = request.form.getlist('customCheck2')
-        selected_car = request.form.getlist('customCheck3')
-        total_amount = sum(float(air_data[int(index)]['charge']) for index in selected_air) + \
-                    sum(float(hotel_data[int(index)]['price']) for index in selected_hotels) + \
-                    sum(float(car_data[int(index)]['avg_discounted_price']) for index in selected_car)
+        # selected_air = request.form.getlist('customCheck1')
+        # selected_hotels = request.form.getlist('customCheck2')
+        # selected_car = request.form.getlist('customCheck3')
+        # total_amount = sum(float(air_data[int(index)]['charge']) for index in selected_air) + \
+        #             sum(float(hotel_data[int(index)]['price']) for index in selected_hotels) + \
+        #             sum(float(car_data[int(index)]['avg_discounted_price']) for index in selected_car)
 
     # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
         sql = f'''
@@ -63,7 +63,7 @@ def get_flight():
             FROM test_db.airplanecrawl
             WHERE date = '{selected_date}'
             ORDER BY charge ASC
-            LIMIT 50;
+            LIMIT 100;
             '''
     else:
     # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
