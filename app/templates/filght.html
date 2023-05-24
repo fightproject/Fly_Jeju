@@ -431,6 +431,17 @@
                                                     <input type="text" id="selectedDate" name="selectedDate" value="2023-07-01">
                                                 </div>
                                                 <div class="form-group mx-sm-3 mb-2">
+                                                    <label for="status-select" class="mr-2">가격 범위 설정</label>
+                                                    <select class="custom-select" id="statusselect1" name="statusselect1">
+                                                            <option selected value="0">Choose...</option>
+                                                            <option value="1">0~5만원</option>
+                                                            <option value="2">5~10만원</option>
+                                                            <option value="3">10~15만원</option>
+                                                            <option value="4">15만원~20만원</option>
+                                                            <option value="5">20만원~</option>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group mx-sm-3 mb-2">
                                                     <label class="mr-2">출발지</label>
                                                     <select class="custom-select" id="statusselect2" name="statusselect2">
                                                         <option selected value='GMP'>Choose...</option>
@@ -438,13 +449,15 @@
                                                         <option value="CJU">제주</option>
                                                     </select>
                                                 </div>
-                                                <div style="display: flex; justify-content: flex-end;">
-                                                    <div class="form-group mx-sm-3 mb-2" style="text-align: right;">
-                                                        <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
-                                                    </div>
-                                                </div>
-                                                <input id="filghtsubmit" type="submit" value="검색">
+                                                <input class="btn btn-dark mb-2" id="filghtsubmit" type="submit" value="검색">
                                             </form>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <div class="form-group mx-sm-3 mb-2 text-lg-right" style="text-align: right;">
+                                                    <h4 style="display: inline;">Total:<span id="totalAmount">{{total_amount}}₩</span></h4>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div style="height: 700px; overflow: auto;">
@@ -470,11 +483,12 @@
                                                 </thead>
                                                 <tbody id="flight-table-body">
                                                     <tr>
-                                                        {% if air_list == None %}
+                                                        <!-- {% if air_list == None %}
                                                         <td colspan="9">
                                                             <h5>검색 결과가 없습니다.</h5>
                                                         </td>
-                                                        {% else %} {% for data in air_list %}
+                                                        {% else %}  -->
+                                                        {% for data in air_list %}
                                                         <td>
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" name="flight-checkbox1" class="custom-control-input" id="customCheck1{{loop.index0}}">
@@ -490,7 +504,9 @@
                                                         <td>{{ data['seat'] }}</td>
                                                         <td>{{ data['charge'] }}</td>
                                                     </tr>
-                                                    {% endfor %} {% endif %}
+                                                    {% endfor %}
+
+                                                    <!-- {% endif %} -->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -510,29 +526,27 @@
                                 <div class="card-body">
                                     <div class="row mb-2">
                                         <div class="col-lg-8">
-                                            <form class="form-inline">
+                                            <form class="form-inline" action='/hotelprice' method="get">
                                                 <div class="form-group mx-sm-3 mb-2">
                                                     <label for="status-select" class="mr-2">가격</label>
-                                                    <form action='/hotelprice' method="POST">
-                                                        <select class="custom-select" id="status-select3">
-                                                            <option selected>Choose...</option>
-                                                            <option value="1">0~5만원</option>
-                                                            <option value="2">5~10만원</option>
-                                                            <option value="3">10~15만원</option>
-                                                            <option value="4">15만원~20만원</option>
+                                                    <select class="custom-select" id="statusselect3" name="statusselect3">
+                                                            <option selected value="0">Choose...</option>
+                                                            <option value="1">0~3만원</option>
+                                                            <option value="2">3~5만원</option>
+                                                            <option value="3">5~10만원</option>
+                                                            <option value="4">10~20만원</option>
                                                             <option value="5">20만원~</option>
                                                         </select>
-                                                        <input type="submit" value="가격 검색">
-                                                    </form>
                                                 </div>
                                                 <div class="form-group mx-sm-3 mb-2">
                                                     <label for="status-select" class="mr-2">지역</label>
-                                                    <select class="custom-select" id="status-select4">
-                                                            <option selected>Choose...</option>
-                                                            <option value="1">제주</option>
-                                                            <option value="2">서귀포</option>
-                                                        </select>
+                                                    <select class="custom-select" id="statusselect4" name="statusselect4">
+                                                        <option selected value="제주">Choose...</option>
+                                                        <option value="제주">제주</option>
+                                                        <option value="서귀포">서귀포</option>
+                                                    </select>
                                                 </div>
+                                                <input class="btn btn-dark mb-2" type="submit" value="검색">
                                             </form>
                                         </div>
                                         <!-- end col-->
@@ -662,7 +676,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                2018 - 2020 © Hyper - Coderthemes.com
+                                2023 © Fly_jeju.com
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-right footer-links d-none d-md-block">
@@ -747,6 +761,7 @@
     <!-- bundle -->
     <script src="static/assets/js/vendor.min.js"></script>
     <script src="static/assets/js/app.min.js"></script>
+    <script src="static/assets/js/filght_total_price.js"></script>
 
 </body>
 

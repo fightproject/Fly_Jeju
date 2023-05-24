@@ -87,11 +87,11 @@
                     selectable: false,
                     dateClick: function(e) {
                         var clickedDate = e.dateStr;
-                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedDate + "&statusselect2=GMP"
+                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedDate + "&statusselect2=GMP&statusselect1=0"
                     },
                     eventClick: function(e) {
                         var clickedEvent = dateformat(e.event.start);
-                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedEvent + "&statusselect2=GMP"
+                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedEvent + "&statusselect2=GMP&statusselect1=0"
                     }
                 }),
                 // 캘린더로 데이터 전달
