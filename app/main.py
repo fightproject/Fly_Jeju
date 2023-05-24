@@ -44,15 +44,17 @@ def get_flight():
                                     LIMIT 500;''') 
     
     if request.method=='POST':
-        selected_date = request.json.get('date')
+        selected_date = request.json.get('date') 
+        
+        
+            
 
         # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
         sql = f'''
             SELECT date, day, name, airport, leavetime, reachtime, seat,charge
             FROM test_db.airplanecrawl
             WHERE date = '{selected_date}'
-            ORDER BY charge ASC
-            LIMIT 100;
+            ORDER BY charge ASC;
             '''
     else:
         # GET일때 기본적으로 보여질 쿼리문.

@@ -76,3 +76,4 @@ function renderTable(data) {
 }
 
 document.getElementById('selectedDate').addEventListener('change', fetchData);
+

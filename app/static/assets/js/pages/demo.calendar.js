@@ -1,165 +1,143 @@
-/**
- * Theme: Hyper - Responsive Bootstrap 4 Admin Dashboard
- * Author: Coderthemes
- * Component: Full-Calendar
- */
+var render = {
+    renderTable: function() {
+      // 함수 내용
+    }
+  };
 
-! function($) {
+! function(l) {
     "use strict";
 
-    var CalendarApp = function() {
-        this.$body = $("body")
-        this.$modal = $('#event-modal'),
-            this.$calendar = $('#calendar'),
-            this.$formEvent = $("#form-event"),
-            this.$btnNewEvent = $("#btn-new-event"),
-            this.$btnDeleteEvent = $("#btn-delete-event"),
-            this.$btnSaveEvent = $("#btn-save-event"),
-            this.$modalTitle = $("#modal-title"),
+    function e() {
+        this.$body = l("body"),
+            this.$modal = l("#event-modal"),
+            this.$calendar = l("#calendar"),
+            this.$formEvent = l("#form-event"),
+            this.$btnNewEvent = l("#btn-new-event"),
+            this.$btnDeleteEvent = l("#btn-delete-event"),
+            this.$btnSaveEvent = l("#btn-save-event"),
+            this.$modalTitle = l("#modal-title"),
             this.$calendarObj = null,
             this.$selectedEvent = null,
             this.$newEventData = null
-    };
+    }
 
-
-    /* on click on event */
-    CalendarApp.prototype.onEventClick = function(info) {
-            this.$formEvent[0].reset();
-            this.$formEvent.removeClass("was-validated");
-
-            this.$newEventData = null;
-            this.$btnDeleteEvent.show();
-            this.$modalTitle.text('Edit Event');
-            this.$modal.modal({
-                backdrop: 'static'
-            });
-            this.$selectedEvent = info.event;
-            $("#event-title").val(this.$selectedEvent.title);
-            $("#event-category").val(this.$selectedEvent.classNames[0]);
+    e.prototype.onEventClick = function(e) {
+            this.$newEventData = null,
+                l("#event-title").val(this.$selectedEvent.title),
+                l("#event-category").val(this.$selectedEvent.classNames[0])
         },
+        e.prototype.onSelect = function(e) {
+            this.$calendarObj.unselect()
+        }, e.prototype.init = function() {
+            var e = new Date(l.now());
 
-        /* on select */
-        CalendarApp.prototype.onSelect = function(info) {
-            this.$formEvent[0].reset();
-            this.$formEvent.removeClass("was-validated");
 
-            this.$selectedEvent = null;
-            this.$newEventData = info;
-            this.$btnDeleteEvent.hide();
-            this.$modalTitle.text('Add New Event');
+            var t = [],
+                a = this;
+            a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
+                    slotDuration: "00:15:00",
+                    slotMinTime: "08:00:00",
+                    slotMaxTime: "19:00:00",
+                    themeSystem: "bootstrap",
+                    bootstrapFontAwesome: !1,
+                    buttonText: {
+                        today: "Today",
+                        month: "Month",
+                        prev: "Prev",
+                        next: "Next"
+                    },
+                    initialView: "dayGridMonth",
+                    handleWindowResize: !0,
+                    height: l(window).height() - 200,
+                    headerToolbar: {
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth"
+                    },
 
-            this.$modal.modal({
-                backdrop: 'static'
-            });
-            this.$calendarObj.unselect();
-        },
-
-        /* Initializing */
-        CalendarApp.prototype.init = function() {
-
-            /*  Initialize the calendar  */
-            var today = new Date($.now());
-
-            var Draggable = FullCalendar.Draggable;
-            var externalEventContainerEl = document.getElementById('external-events');
-
-            var defaultEvents = [];
-            var $this = this;
-            // cal - init
-            $this.$calendarObj = new FullCalendar.Calendar($this.$calendar[0], {
-                slotDuration: '00:15:00',
-                /* If we want to split day time each 15minutes */
-                slotMinTime: '08:00:00',
-                slotMaxTime: '19:00:00',
-                themeSystem: 'bootstrap',
-                bootstrapFontAwesome: false,
-                buttonText: {
-                    today: 'Today',
-                    month: 'Month',
-                    week: 'Week',
-                    day: 'Day',
-                    list: 'List',
-                    prev: 'Prev',
-                    next: 'Next'
-                },
-                initialView: 'dayGridMonth',
-                handleWindowResize: true,
-                height: $(window).height() - 200,
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth'
-                },
-                initialEvents: function(info, successCallback, failureCallback) {
-                    var defaultEvents = [];
-                    var $this = this;
-
-                    function dateformat(date_str) {
-                        var date = new Date(date_str);
-                        var year = date.getFullYear();
-                        var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                        var day = ("0" + date.getDate()).slice(-2);
-                        var formatted_date = year + "-" + month + "-" + day;
-                        return formatted_date;
-                    }
-
-                    $.ajax({
-                        url: '/demo',
-                        method: 'GET',
-                        dataType: 'json',
-                        success: function(data) {
-                            var airplane = JSON.parse(data);
-                            jQuery.each(airplane, function() {
-                                defaultEvents.push({
-                                    title: Number(this.maxcharge).toLocaleString() + "원",
-                                    start: dateformat(this.date),
-                                    end: dateformat(this.date),
-                                    color: "#35b8e0"
-                                }, {
-                                    title: Number(this.avgcharge).toLocaleString() + "원",
-                                    start: dateformat(this.date),
-                                    end: dateformat(this.date),
-                                    color: "#f9c851"
-                                }, {
-                                    title: Number(this.mincharge).toLocaleString() + "원",
-                                    start: dateformat(this.date),
-                                    end: dateformat(this.date),
-                                    color: "#ff5b5b"
+                    initialEvents: function(info, successCallback, failureCallback) {
+                        var defaultEvents = [];
+                        var $this = this;
+                        $.ajax({
+                            url: '/demo',
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                var airplane = JSON.parse(data);
+                                jQuery.each(airplane, function() {
+                                    defaultEvents.push({
+                                        title: Number(this.maxcharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#f2c2c2"
+                                    }, {
+                                        title: Number(this.avgcharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#ebddbc"
+                                    }, {
+                                        title: Number(this.mincharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#ff5b5b"
+                                    });
                                 });
-                            });
-                            successCallback(defaultEvents);
-                            // console.log("defaultEvents", defaultEvents);
-                        },
-                        error: function() {
-                            // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
-                            console.log('Failed to fetch events data.');
+                                successCallback(defaultEvents);
+                                // console.log("defaultEvents", defaultEvents);
+                            },
+                            error: function() {
+                                // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
+                                console.log('Failed to fetch events data.');
+                            }
+                        });
+                    },
+                    editable: false,
+                    droppable: false,
+                    selectable: false,
+                    dateClick: function(e) {
+                        var date = e.dateStr;
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '/filght', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                // 페이지 이동
+                                window.location.href = 'filght';
+                                render.renderTable();
+                            }
                         }
-                    });
-                },
-                editable: false,
-                droppable: false, // this allows things to be dropped onto the calendar !!!
-                // dayMaxEventRows: false, // allow "more" link when too many events
-                selectable: true,
-                dateClick: function(info) { $this.onSelect(info); },
-                eventClick: function(info) { $this.onEventClick(info); }
-            });
-
-            $this.$calendarObj.render();
-
-            // on new event button click
-            $this.$btnNewEvent.on('click', function(e) {
-                $this.onSelect({ date: new Date(), allDay: true });
-            });
-
+                        xhr.send(JSON.stringify({ date: date }));
+                    },
+                    eventClick: function(e) {
+                        var date = dateformat(e.event.start);
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '/filght', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.onreadystatechange = function() {
+                            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                // 페이지 이동
+                                window.location.href = 'filght';
+                                render.renderTable();
+                            }
+                        }
+                        xhr.send(JSON.stringify({ date: date }));
+                        
+                    }
+                }),
+                // 캘린더로 데이터 전달
+                a.$calendarObj.render()
         },
+        l.CalendarApp = new e,
+        l.CalendarApp.Constructor = e
 
-        //init CalendarApp
-        $.CalendarApp = new CalendarApp, $.CalendarApp.Constructor = CalendarApp
-
+    function dateformat(date_str) {
+        var date = new Date(date_str);
+        var year = date.getFullYear();
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var day = ("0" + date.getDate()).slice(-2);
+        var formatted_date = year + "-" + month + "-" + day;
+        return formatted_date;
+    }
 }(window.jQuery),
-
-//initializing CalendarApp
-function($) {
+function() {
     "use strict";
-    $.CalendarApp.init()
-}(window.jQuery);
+    window.jQuery.CalendarApp.init()
+}();
+

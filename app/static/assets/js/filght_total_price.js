@@ -51,7 +51,7 @@ carCheckboxes.forEach(function (checkbox) {
   checkbox.addEventListener('change', updateFlightTotal);
 });
 
-// 항공권 데이터가 업데이트되기 전에 체크박스의 change 이벤트가 발생하여 updateFlightTotal 함수가 호출되어도 업데이트된 데이터가 아직 화면에 표시되지 않는 것
-yourAjaxFunction(function() {
-  updateFlightTotal();
-});
+// // 항공권 데이터가 업데이트되기 전에 체크박스의 change 이벤트가 발생하여 updateFlightTotal 함수가 호출되어도 업데이트된 데이터가 아직 화면에 표시되지 않는 것
+// yourAjaxFunction(function() {
+//   updateFlightTotal();
+// });
