@@ -14,7 +14,7 @@
     <link href="static/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="static/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
     <link href="static/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="loading" data-layout="detached" data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -378,10 +378,7 @@
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
                             <li>
-                                <a href="dashboard1">dashboard1</a>
-                            </li>
-                            <li>
-                                <a href="dashboard2">dashboard2</a>
+                                <a href="dashboard1">dashboard</a>
                             </li>
                         </ul>
                     </li>
@@ -398,12 +395,12 @@
                     <li class="side-nav-item">
                         <a href="javascript: void(0);" class="side-nav-link">
                             <i class="uil-store"></i>
-                            <span> Filght </span>
+                            <span> Travel package </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <ul class="side-nav-second-level" aria-expanded="false">
                             <li>
-                                <a href="filght">Filght</a>
+                                <a href="filght">Travel package</a>
                             </li>
 
                         </ul>
@@ -428,17 +425,16 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item active"><a href="/">MainCalendar</a></li>
-                                        <li class="breadcrumb-item"><a href="filght">Filght</a></li>
-                                        <li class="breadcrumb-item"><a href="dashboard1">DashBoard1</a></li>
-                                        <li class="breadcrumb-item"><a href="dashboard2">DashBoard2</a></li>
+                                        <li class="breadcrumb-item"><a href="filght">Travel package</a></li>
+                                        <li class="breadcrumb-item"><a href="dashboard1">DashBoard</a></li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Orders</h4>
+                                <h4 class="page-title">Travel package</h4>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
-                    <!-- 항공권  -->
+                    <h3>항공권</h3>
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -474,11 +470,10 @@
                                                     <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
                                                 </div>
                                             </div>
-                                        
                                           </form>
                                         </div>
                                       </div>
-                                      <div style="height: 700px; overflow: auto;">
+                                    <div style="height: 700px; overflow: auto;">
                                       <div class="table-responsive">
                                         <table class="table table-centered mb-0">
                                           <thead class="thead-light">
@@ -500,7 +495,7 @@
                                             </tr>
                                           </thead>
                                           <tbody id="flight-table-body">
-                                            {% for data in air_list %}
+                                                {% for data in air_list %}
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -525,9 +520,7 @@
                                         </table>
                                       </div>
                                     </div>
-                                
                                 </div>
-                            
                                 <!-- end card-body-->
                             </div>
                             <!-- end card-->
@@ -536,12 +529,14 @@
                     </div>
                     <!-- end row -->
                     <!-- 호텔  -->
+                    <h3>호텔</h3>
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row mb-2">
                                         <div class="col-lg-8">
+                                            
                                             <form class="form-inline">
                                                 <div class="form-group mx-sm-3 mb-2">
                                                     <label for="status-select" class="mr-2">가격</label>
@@ -566,8 +561,9 @@
                                         </div>
                                         <!-- end col-->
                                     </div>
-                                    <div style="height: 700px; overflow: auto;">
+                                    <!-- <div style="height: 700px; overflow: auto;"> -->
                                     <div class="table-responsive">
+                                        <div style="height: 700px; overflow: auto;">
                                         <table class="table table-centered mb-0">
                                             <thead class="thead-light">
                                                 <tr>
@@ -616,7 +612,7 @@
                         </div>
                         <!-- end col -->
                     </div>
-                    <!-- 렌터카  -->
+                    <h3>렌터카</h3>
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -695,7 +691,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                2018 - 2020 © Hyper - Coderthemes.com
+                                2023 © Fly_jeju.com
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-right footer-links d-none d-md-block">

@@ -1,17 +1,13 @@
 from flask import Flask, render_template,request,jsonify
 from bigquery import clinet_bigquery
-import func
 
 app = Flask(__name__, static_url_path="/static")
-
-# total price 초기화
-total_amount = 0
 
 @app.route('/')
 def calendar():
     return render_template('main.html')
 
-# 다인님 코드 부분
+# 달력페이지
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
     if request.method == 'POST':
@@ -19,20 +15,21 @@ def demo():
         return "POST 요청을 받았습니다"
     else:
         sql = '''
-            SELECT date, charge
-            FROM test_db.airplanecrawl 
-            LIMIT 10
+            SELECT date, CAST(AVG(charge) AS INT64) AS avgcharge, MIN(charge) AS mincharge, MAX(charge) AS maxcharge
+            FROM test_db.airplanecrawl
+            GROUP BY date
+            LIMIT 100;
         '''
         data_list = clinet_bigquery(sql)
         json_data = data_list.to_json(orient='records')
-        
 
         return jsonify(json_data)
 
-
+# 항공권목록 페이지
 @app.route('/filght', methods=['GET','POST'])
 def get_flight():
-    global total_amount
+    
+    # 렌터카데이터불러오기(기본)
     car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
                                     CAST(AVG(CAST(regular_price AS INT)) AS INT) AS avg_regular_price,
                                     CAST(AVG(CAST(discounted_price AS INT)) AS INT) AS avg_discounted_price
@@ -49,15 +46,7 @@ def get_flight():
     if request.method=='POST':
         selected_date = request.json.get('date')
 
-        # 항공권과 호텔, 렌터카에 대한 총합 보여주기위함.
-        # selected_air = request.form.getlist('customCheck1')
-        # selected_hotels = request.form.getlist('customCheck2')
-        # selected_car = request.form.getlist('customCheck3')
-        # total_amount = sum(float(air_data[int(index)]['charge']) for index in selected_air) + \
-        #             sum(float(hotel_data[int(index)]['price']) for index in selected_hotels) + \
-        #             sum(float(car_data[int(index)]['avg_discounted_price']) for index in selected_car)
-
-    # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
+        # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
         sql = f'''
             SELECT date, day, name, airport, leavetime, reachtime, seat,charge
             FROM test_db.airplanecrawl
@@ -66,7 +55,7 @@ def get_flight():
             LIMIT 100;
             '''
     else:
-    # 데이터베이스에서 선택된 날짜의 데이터를 가져오는 코드
+        # GET일때 기본적으로 보여질 쿼리문.
         sql = f'''
             SELECT date, day, name, airport, leavetime, reachtime, seat,charge
             FROM test_db.airplanecrawl
@@ -81,7 +70,7 @@ def get_flight():
     car_list = car_data.to_dict(orient='records')
     
     if request.method == 'POST':
-        # air_data를 JSON 형식으로 변환하여 반환
+        # JSON 형식으로 변환하여 반환
         return jsonify(air_list=air_list, hotel_list=hotel_list, car_list=car_list)
     else:
         # HTML 템플릿 렌더링 및 반환
@@ -95,9 +84,6 @@ def get_flight():
 def dashboard1():
     return render_template('dashboard1.html')
 
-@app.route('/dashboard2')
-def dashboard2():
-    return render_template('dashboard2.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
