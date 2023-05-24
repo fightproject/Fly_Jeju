@@ -4,7 +4,7 @@ import func
 import json
 
 KEYFILEPATH = 'config/*.json'
-
+    
 
 app = Flask(__name__, static_url_path="/static")
 
@@ -12,7 +12,7 @@ total_amount = 0
 
 @app.route('/')
 def calendar():
-    return render_template('landing.html')
+    return render_template('main.html')
 
 @app.route('/demo', methods=['GET', 'POST'])
 def demo():
