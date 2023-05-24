@@ -1,0 +1,32 @@
+https://flight.naver.com/flights/domestic/GMP-CJU-20230701/CJU-GMP-20230708?adult=1&fareType=YC
+
+편도 : 도메인/국내외 여부/출발공항-도착공항-날짜?어른=명수&소아=명수&유아=명수&좌석타입=좌석정보
+
+왕복 : 도메인/국내외 여부/출방공항-도착공항-출발날짜/도착공항-출발공항-귀환날짜?어른=명수&소아=명수&유아=명수&좌석타입=좌석정보
+
+국외선의 경우 직항일경우 &inDirect=True가 추가된다.
+
+왕복인 경우 그냥 편도 두번과 동일
+
+ex)
+국내선, 김포->제주 왕복, 출발일 20230701, 귀환일 20230708, 어른 1, 소아 1, 유아 1, 일반석
+https://flight.naver.com/flights/domestic/GMP-CJU-20230701/CJU-GMP-20230708?adult=1&child=1&infant=1&fareType=Y
+
+국내외 여부
+domestic : 국내
+international : 국외
+
+승객정보  # 0으로 적어도 안적은것과 동일한 페이지
+adult : 성인
+child : 소아
+infant : 유아
+
+좌석정보
+fareType = YC 국내선 전체좌석 카테고리
+fareType = Y 국내선 할인/일반/특가석 카테고리, 국외선 일반 카테고리
+fareType = C 국내, 국외선 비즈니스석 카테고리
+fareType = P 국외선 프리미엄 일반석
+fareType = F 국외선 일등석
+
+
+
