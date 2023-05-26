@@ -107,7 +107,6 @@ app
         ┖ pages
             ┖ demo.calendar.js #달력 커스텀 및 데이터 출력
         ┖ filght_total_price.js # 항공권, 호텔, 렌트카 경비 합산
-      
 ┖ templates
       ┖ dashboard1.html # 데이터 분석 대시보
       ┖ filght.html # 항공권, 호텔, 헨트카 목록 출력
