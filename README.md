@@ -7,10 +7,11 @@
 |Version Control|Github, Git|
 |BI Tool|Looker Studio|
 |Project personnel|4인 프로젝트|
+|project period|2023.05.15~2023.05.26|
 
 <br>
 
-## ✅김포-제주 극성수기 여행 경비 안내 웹 개발- Fly_jeju
+## ✅김포-제주 극성수기 여행 경비 안내 웹 개발- Travel_Expense_Information_Web_Developm
 제주도 여행 경비를 고려했을때 고정적으로 발생하는 비용인 항공권, 숙박시설, 렌터카 요금을 합산한 금액을 간단하게 조회해볼 수 없을까 하는 의문과 아직은 항공권, 숙박, 렌터카 요금을 따로 보여주는 웹 서비스만 존재합니다.
 또한 조사결과 2030 젊은층은 해외여행을 선호하는 반면, 60대 이상 노년층은 국내에 더 관심많았습니다. 가성비 여행을 찾는 2030 젊은층의 국내 여행 증가를 위해 관광객들에게 저렴한 경비를 보다 편리하고 정확한 정보를 제공할 수 있는 서비스 필요성으로 인해 해당 프로젝트를 진행하게 되었습니다.
 국내 여행지 중 항공을 이용하여 여행을 가장 많이 가는 제주와 제주에서 출발하는 운항 중 가장 많은 도착지인 김포공항의 극성수기(7월~8월)로 범위를 선정하였습니다.
@@ -78,7 +79,18 @@
 <br>
 
 ## ✅파이프라인
-![image](https://github.com/KIMJEONGSU/Fly_Jeju/assets/23291338/7f0b18d8-178a-469d-a392-e23ad5173473)
+![image](https://github.com/KIMJEONGSU/Travel_Expense_Information_Web_Developm/assets/23291338/f258c2c6-288a-4db9-9fa0-2957869a288c)
+
+<br>
+
+1. selenium을 사용하여 BigQuery Database에 적재.
+2. DB와 Looker Studio 그리고 웹서버 연동.
+3. 사용자가 날짜 입력 또는 기타옵션 선택시 URL 호출
+4. 호출한 URL로 지정된 뷰함수 호출
+5. 호출한 요청을 분석 및 논리 실행
+6. 분석결과 응답으로 전송
+7. 응답으로 전송할 값을 HTML에 표현.
+8. 사용자에게 가격 총합 제공.
 
 <br>
 
@@ -113,6 +125,44 @@ app
       ┖ main.html # 메인달력, 항공권 최저가, 평균가, 최고가 금액 출력
 ┖ bigquery.py # 웹서버, DB 연결 코드
 ┖ main.py # Flask로 app구축, jinja2, bootstrap을 활용하여 페이지 연동
-AIB_TP1_놀당갑서.pdf # 프로젝트PPT
 ```
+
+<br>
+
+## ✅서비스 구성 및 제작 과정
+
+### DB 선정
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
