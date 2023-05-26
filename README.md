@@ -78,3 +78,42 @@
 <br>
 
 ## ✅파이프라인
+![image](https://github.com/KIMJEONGSU/Fly_Jeju/assets/23291338/7f0b18d8-178a-469d-a392-e23ad5173473)
+
+<br>
+
+## ✅내부 디렉토리 구조
+```
+Data
+┖ Start.bat
+┖ airplaneCrawl0701_0715.py # 항공권데이터 크롤링 코드
+┖ airplaneCrawl0716_0731.py # 항공권데이터 크롤링 코드
+┖ airplaneCrawl0801_0815.py # 항공권데이터 크롤링 코드
+┖ airplaneCrawl0816_0831.py # 항공권데이터 크롤링 코드
+┖ chromedriver.exe # 크롬드라이버
+┖ hotel_data_crawling.py # 호텔데이터 크롤링 코드
+┖ 환경.txt # 윈도우 스케줄링을 위한 환경 설정 설명
+app
+┖ __pycache__
+┖ config
+     ┖ fightproject-46d68da728a3.json # Bigquery 서비스 계정 키
+┖ static/assets
+     ┖ css
+     ┖ fonts
+     ┖ images
+     ┖ js
+        ┖ vendor
+            ┖ fullcalendar.min.js # js 달력라이브러리
+        ┖ pages
+            ┖ demo.calendar.js #달력 커스텀 및 데이터 출력
+        ┖ filght_total_price.js # 항공권, 호텔, 렌트카 경비 합산
+      
+┖ templates
+      ┖ dashboard1.html # 데이터 분석 대시보
+      ┖ filght.html # 항공권, 호텔, 헨트카 목록 출력
+      ┖ main.html # 메인달력, 항공권 최저가, 평균가, 최고가 금액 출력
+┖ bigquery.py # 웹서버, DB 연결 코드
+┖ main.py # Flask로 app구축, jinja2, bootstrap을 활용하여 페이지 연동
+AIB_TP1_놀당갑서.pdf # 프로젝트PPT
+```
+
