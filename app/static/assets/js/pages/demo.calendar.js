@@ -9,55 +9,26 @@
             this.$btnNewEvent = l("#btn-new-event"),
             this.$btnDeleteEvent = l("#btn-delete-event"),
             this.$btnSaveEvent = l("#btn-save-event"),
-            this.$modalTitle = l("#modal-title")
-
+            this.$modalTitle = l("#modal-title"),
+            this.$calendarObj = null,
+            this.$selectedEvent = null,
+            this.$newEventData = null
     }
-    e.prototype.init = function() {
-            var e = new Date(l.now());
-            new FullCalendar.Draggable(document.getElementById("external-events"), {
-                itemSelector: ".external-event",
-                eventData: function(e) {
-                    return {
-                        title: e.innerText,
-                        className: l(e).data("class")
-                    }
-                }
-            });
-console.log("didididididididididdi");
-            // var t = [{
-            //     title: "Meeting with Mr. Shreyu",
-            //     start: new Date(l.now() + 158e6),
-            //     end: new Date(l.now() + 338e6),
-            //     className: "bg-warning"
-            // }];
-            var t = [];
-            // Ajax를 사용하여 데이터 받아오기
-            l.ajax({
-                url: '/demo',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    var airplane = JSON.parse(data);
-                    // console.log(typeof 'airplane');
-                    for (var i = 0; i < airplane.length; i++) {
-                        t.push({
-                            title: airplane[i].charge,
-                            start: new Date(airplane[i].date),
-                            // end: new Date(airplane[i].date),
-                            className: "bg-warning"
-                        });
-                    }
 
-                    console.log("ttttt", t);
-                },
-                error: function() {
-                    // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
-                    console.log('Failed to fetch events data.');
-                }
-            });
-            var a = this;
-            a.$calendarObj = new FullCalendar.Calendar(
-                a.$calendar[0], {
+    e.prototype.onEventClick = function(e) {
+            this.$newEventData = null,
+                l("#event-title").val(this.$selectedEvent.title),
+                l("#event-category").val(this.$selectedEvent.classNames[0])
+        },
+        e.prototype.onSelect = function(e) {
+            this.$calendarObj.unselect()
+        }, e.prototype.init = function() {
+            var e = new Date(l.now());
+
+
+            var t = [],
+                a = this;
+            a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
                     slotDuration: "00:15:00",
                     slotMinTime: "08:00:00",
                     slotMaxTime: "19:00:00",
@@ -66,9 +37,6 @@ console.log("didididididididididdi");
                     buttonText: {
                         today: "Today",
                         month: "Month",
-                        week: "Week",
-                        day: "Day",
-                        list: "List",
                         prev: "Prev",
                         next: "Next"
                     },
@@ -80,48 +48,66 @@ console.log("didididididididididdi");
                         center: "title",
                         right: "dayGridMonth"
                     },
-                    initialEvents: t, // 빈 배열로 초기화
-                    editable: !0,
-                    droppable: !0,
-                    selectable: !0,
-                    // dateClick: function(e) { a.onSelect(e) },
-                    // eventClick: function(e) { a.onEventClick(e) }
-                }
-            );
-            a.$calendarObj.render(),
-                a.$btnNewEvent.on("click", function(e) {
-                    a.onSelect({ date: new Date, allDay: !0 })
-                }),
-                a.$formEvent.on("submit", function(e) {
-                    e.preventDefault();
-                    var t, n = a.$formEvent[0];
-                    n.checkValidity() ? (
-                        a.$selectedEvent ? (
-                            a.$selectedEvent.setProp(
-                                "title",
-                                l("#event-title").val()
-                            ), a.$selectedEvent.setProp(
-                                "classNames", [l("#event-category").val()]
-                            )
-                        ) : (t = {
-                                title: l("#event-title").val(),
-                                start: a.$newEventData.date,
-                                allDay: a.$newEventData.allDay,
-                                className: l("#event-category").val()
+
+                    initialEvents: function(info, successCallback, failureCallback) {
+                        var defaultEvents = [];
+                        var $this = this;
+                        $.ajax({
+                            url: '/demo',
+                            method: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                var airplane = JSON.parse(data);
+                                jQuery.each(airplane, function() {
+                                    defaultEvents.push({
+                                        title: Number(this.maxcharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#f2c2c2"
+                                    }, {
+                                        title: Number(this.avgcharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#ebddbc"
+                                    }, {
+                                        title: Number(this.mincharge).toLocaleString() + "원",
+                                        start: dateformat(this.date),
+                                        color: "#ff5b5b"
+                                    });
+                                });
+                                successCallback(defaultEvents);
+                                // console.log("defaultEvents", defaultEvents);
                             },
-                            a.$calendarObj.addEvent(t)), a.$modal.modal("hide")) : (e.stopPropagation(), n.classList.add("was-validated"))
+                            error: function() {
+                                // 데이터를 가져오는 도중 에러가 발생한 경우 실행되는 콜백 함수
+                                console.log('Failed to fetch events data.');
+                            }
+                        });
+                    },
+                    editable: false,
+                    droppable: false,
+                    selectable: false,
+                    dateClick: function(e) {
+                        var clickedDate = e.dateStr;
+                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedDate + "&statusselect2=GMP&statusselect1=0"
+                    },
+                    eventClick: function(e) {
+                        var clickedEvent = dateformat(e.event.start);
+                        window.location.href = "http://127.0.0.1:5000/filghtDate?selectedDate=" + clickedEvent + "&statusselect2=GMP&statusselect1=0"
+                    }
                 }),
-                l(a.$btnDeleteEvent.on("click", function(e) {
-                    a.$selectedEvent &&
-                        (
-                            a.$selectedEvent.remove(),
-                            a.$selectedEvent = null,
-                            a.$modal.modal("hide")
-                        )
-                }))
+                // 캘린더로 데이터 전달
+                a.$calendarObj.render()
         },
         l.CalendarApp = new e,
         l.CalendarApp.Constructor = e
+
+    function dateformat(date_str) {
+        var date = new Date(date_str);
+        var year = date.getFullYear();
+        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        var day = ("0" + date.getDate()).slice(-2);
+        var formatted_date = year + "-" + month + "-" + day;
+        return formatted_date;
+    }
 }(window.jQuery),
 function() {
     "use strict";

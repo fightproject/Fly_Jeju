@@ -35,9 +35,6 @@ def hotel_option_func(selected_option,data,columns):
     return filtered_data
 
 # 날짜에 따른 결과값을 보여주기위한 함수
-def date_option_func(selected_option,data,columns):       
-    filtered_data = []
-    for item in data:
-        if item[columns] == selected_option:
-            filtered_data.append(item)
+def date_option_func(selected_option, data, column):
+    filtered_data = data[data[column] == selected_option]
     return filtered_data

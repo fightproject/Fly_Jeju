@@ -20,95 +20,117 @@ def demo():
         return "POST 요청을 받았습니다"
     else:
         sql = '''
-            SELECT date, charge
-            FROM test_db.airplanecrawl 
-            LIMIT 10
+            SELECT date, CAST(AVG(charge) AS INT64) AS avgcharge, MIN(charge) AS mincharge, MAX(charge) AS maxcharge
+            FROM test_db.airplanecrawl
+            GROUP BY date
+            LIMIT 200;
         '''
-        data_list = clinet_bigquery('app/config/*.json',sql,0)
+        data_list = clinet_bigquery(sql)
         json_data = data_list.to_json(orient='records')
-        print(data_list)
 
         return jsonify(json_data)
 
-@app.route('/filght',methods=['GET','POST'])
-def flight():
-    global total_amount
-    # 호텔데이터불러오기(기본)
-    hotel_data = clinet_bigquery('app/config/*.json', 
-                                 '''SELECT * FROM test_db.hotelcrawl
-                                    where rating != '평점없음' and star is not null
-                                    LIMIT 500;''',0) 
-    # 항공권 데이터 불러오기(기본)
-    air_data = clinet_bigquery('app/config/*.json', 
-                                 '''SELECT * FROM test_db.airplanecrawl
-                                    LIMIT 300;''',0) 
-    
-    # 렌터카 데이터 불러오기(기본)
-    car_data = clinet_bigquery('app/config/*.json', 
-                                 '''SELECT  carname, oiltype, seater, avg_year,
-                                    CAST(AVG(CAST(regular_price AS INT)) AS INT) AS avg_regular_price,
-                                    CAST(AVG(CAST(discounted_price AS INT)) AS INT) AS avg_discounted_price
-                                    FROM `fightproject.test_db.car`
-                                    WHERE regular_price != '마감' AND discounted_price != '마감'
-                                    GROUP BY carname, oiltype, seater, avg_year
-                                    ORDER BY avg_discounted_price, avg_regular_price;''',0) 
+air_data = clinet_bigquery('''
+                            SELECT date, day, name, airport, leavetime, reachtime, seat,charge
+                            FROM test_db.airplanecrawl
+                            WHERE date = '2023-07-01'
+                            ORDER BY charge ASC
+                            LIMIT 200;
+                            ''')
+hotel_data = clinet_bigquery('''SELECT * FROM test_db.hotelcrawl
+                                where rating != '평점없음' and star is not null
+                                order by star desc, price asc
+                                LIMIT 200;''') 
+car_data = clinet_bigquery('''SELECT  carname, oiltype, seater, avg_year,
+                            CAST(AVG(CAST(regular_price AS INT)) AS INT) AS avg_regular_price,
+                            CAST(AVG(CAST(discounted_price AS INT)) AS INT) AS avg_discounted_price
+                            FROM `fightproject.test_db.car`
+                            WHERE regular_price != '마감' AND discounted_price != '마감'
+                            GROUP BY carname, oiltype, seater, avg_year
+                            ORDER BY avg_discounted_price, avg_regular_price
+                            LIMIT 200;''') 
 
-    # 웹페이지에서 요청이 들어왔을때
+@app.route('/filght', methods=['GET','POST'])
+def get_flight():
+    air_list = air_data.to_dict(orient='records')
+    hotel_list = hotel_data.to_dict(orient='records')
+    car_list = car_data.to_dict(orient='records')
+
+    if request.method=='POST':
+        return jsonify(air_list=air_list, hotel_list=hotel_list, car_list=car_list)
+    else:
+        return render_template('filght.html', air_list=air_list, hotel_list=hotel_list, car_list=car_list)
+
+
+
+@app.route('/filghtDate', methods=['GET','POST'])
+def filghtDate(selectedDate=None,statusselect1=None, statusselect2=None):
     if request.method == 'POST':
-        # 항공권과 호텔, 렌터카에 대한 총합 보여주기위함.
-        selected_air = request.form.getlist('customCheck1')
-        selected_hotels = request.form.getlist('customCheck2')
-        selected_car = request.form.getlist('customCheck3')
-        total_amount = sum(float(air_data[int(index)]['charge']) for index in selected_air) + \
-                    sum(float(hotel_data[int(index)]['price']) for index in selected_hotels) + \
-                    sum(float(car_data[int(index)]['avg_discounted_price']) for index in selected_car)
-                            
+        pass
+    else:
+        selectedDate = request.args.get('selectedDate')
+        statusselect1 = request.args.get('statusselect1')
+        statusselect2 = request.args.get('statusselect2')
+        print("geT------------------------",statusselect1)
+        print("geT------------------------",statusselect2)
+        sql = f'''
+            SELECT date, day, name, airport, leavetime, reachtime, seat,charge
+            FROM test_db.airplanecrawl
+            WHERE date = '{selectedDate}' AND airport = '{statusselect2}'
+            AND (
+                    ({statusselect1} = 0 AND charge >= 0) OR
+                    ({statusselect1} = 1 AND charge >= 0 AND charge < 50000) OR
+                    ({statusselect1} = 2 AND charge >= 50000 AND charge < 100000) OR
+                    ({statusselect1} = 3 AND charge >= 100000 AND charge < 150000)OR
+                    ({statusselect1} = 4 AND charge >= 150000 AND charge < 200000)OR
+                    ({statusselect1} = 5 AND charge >= 200000 )
+                )
+            ORDER BY charge ASC
+            LIMIT 200
+            '''
+        air_data = clinet_bigquery(sql)
+        air_list = air_data.to_dict(orient='records')
+        hotel_list = hotel_data.to_dict(orient='records')
+        car_list = car_data.to_dict(orient='records')
+        return render_template('filght.html', air_list=air_list, hotel_list=hotel_list, car_list=car_list)
 
-        # 항공권에서 가격범위옵션 선택했을 때
-        if 'status-select' in request.form:
-            selected_option1 = request.form.get('status-select')
-            filtered_data1 = func.air_price_option_func(selected_option1, air_data, 'charge')
-            return render_template('filght.html', total_amount=total_amount, hotel_data=hotel_data, air_data=filtered_data1,car_data=car_data)
+@app.route('/hotelprice', methods=['GET','POST'])
+def hotelprice(statusselect3=None,statusselect4=None ):
+    if request.method == 'POST':
+        pass
+    else:
+        statusselect3 = request.args.get('statusselect3')
+        statusselect4 = request.args.get('statusselect4')
+        print("geT------------------------",statusselect3)
+        print("geT------------------------",statusselect4)
+        sql = f'''
+                SELECT * 
+                FROM test_db.hotelcrawl
+                where rating != '평점없음' and star is not null
+                AND (
+                    ({statusselect3} = 0 AND price >= 0) OR
+                    ({statusselect3} = 1 AND price >= 0 AND price < 30000) OR
+                    ({statusselect3} = 2 AND price >= 30000 AND price < 50000) OR
+                    ({statusselect3} = 3 AND price >= 50000 AND price < 100000)OR
+                    ({statusselect3} = 4 AND price >= 100000 AND price < 200000)OR
+                    ({statusselect3} = 5 AND price >= 200000 )
+                )
+                AND  address = '{statusselect4}'
+                order by star desc, price asc
+                LIMIT 200;
+                '''
+        hotel_data = clinet_bigquery(sql)
+        air_list = air_data.to_dict(orient='records')
+        hotel_list = hotel_data.to_dict(orient='records')
+        car_list = car_data.to_dict(orient='records')
 
-        # 항공권 출발지 옵션 선택했을때
-        elif 'status-select2' in request.form:
-            selected_option2 = request.form.get('status-select2')
-            filtered_data2 = func.air_port_option_func(selected_option2, air_data, 'airport')
-            return render_template('filght.html', total_amount=total_amount, hotel_data=hotel_data, air_data=filtered_data2,car_data=car_data)
-        
-        # 호텔에서 가격범위옵션 선택했을 때
-        elif 'status-select3' in request.form:
-            selected_option3 = request.form.get('status-select3')
-            filtered_data3 = func.option_func(selected_option3, hotel_data, 'price')
-            return render_template('filght.html', total_amount=total_amount, hotel_data=filtered_data3, air_data=air_data,car_data=car_data)
-        
-        # 호텔 주소옵션 선택했을때
-        elif 'status-select4' in request.form:
-            selected_option4 = request.form.get('status-select4')
-            filtered_data4 = func.hotel_option_func(selected_option4, hotel_data, 'address')
-            return render_template('filght.html', total_amount=total_amount, hotel_data=hotel_data, air_data=filtered_data4,car_data=car_data)
+        return render_template('filght.html', air_list=air_list, hotel_list=hotel_list, car_list=car_list)
 
-        # 날짜 옵션 선택했을떄
-        elif 'date-select' in request.form:
-            selected_option5 = request.form.get('date-select')
-            filtered_data5 = func.date_option_func(selected_option5, air_data, 'date')
-            return render_template('filght.html', total_amount=total_amount, hotel_data=hotel_data, air_data=filtered_data5,car_data=car_data)
-        
 
-    # 웹페이지 열었을때 보여지는 데이터.
-    return render_template('filght.html',
-                           hotel_data=hotel_data,
-                           air_data=air_data,
-                           total_amount=total_amount,
-                           car_data=car_data)
 
 @app.route('/dashboard1') 
 def dashboard1():
     return render_template('dashboard1.html')
-
-@app.route('/dashboard2')
-def dashboard2():
-    return render_template('dashboard2.html')
 
 if __name__ == '__main__':
     app.run(debug=True)  

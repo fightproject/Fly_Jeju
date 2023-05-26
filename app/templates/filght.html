@@ -54,13 +54,24 @@
 
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="static/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">English</span>
+                            <img src="static/assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">German</span>
                         </a>
 
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="static/assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Korean</span>
+                            <img src="static/assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Italian</span>
                         </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <img src="static/assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Spanish</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <img src="static/assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Russian</span>
+                        </a>
+
                     </div>
                 </li>
 
@@ -360,24 +371,6 @@
                     <li class="side-nav-title side-nav-item">Navigation</li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="uil-home-alt"></i>
-                            <span class="badge badge-info badge-pill float-right">2</span>
-                            <span> Dashboards </span>
-                        </a>
-                        <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="dashboard1">dashboard1</a>
-                            </li>
-                            <li>
-                                <a href="dashboard2">dashboard2</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="side-nav-title side-nav-item">Apps</li>
-
-                    <li class="side-nav-item">
                         <a href="/" class="side-nav-link">
                             <i class="uil-calender"></i>
                             <span> Main - Calendar </span>
@@ -385,17 +378,17 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="javascript: void(0);" class="side-nav-link">
-                            <i class="uil-store"></i>
-                            <span> Flights & Hotels & Cars </span>
-                            <span class="menu-arrow"></span>
+                        <a href="filght" class="side-nav-link">
+                            <i class="uil-calender"></i>
+                            <span>Filght </span>
                         </a>
-                        <ul class="side-nav-second-level" aria-expanded="false">
-                            <li>
-                                <a href="filght">Flights & Hotels & Cars</a>
-                            </li>
+                    </li>
 
-                        </ul>
+                    <li class="side-nav-item">
+                        <a href="/" class="side-nav-link">
+                            <i class="uil-calender"></i>
+                            <span> Dashboard </span>
+                        </a>
                     </li>
                 </ul>
 
@@ -417,28 +410,30 @@
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item active"><a href="/">MainCalendar</a></li>
-                                        <li class="breadcrumb-item"><a href="filght">Flights & Hotels & Cars</a></li>
+                                        <li class="breadcrumb-item"><a href="filght">Filght</a></li>
                                         <li class="breadcrumb-item"><a href="dashboard1">DashBoard1</a></li>
-                                        <li class="breadcrumb-item"><a href="dashboard2">DashBoard2</a></li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title">Flights & Hotels & Cars</h4>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
-                    <!-- 항공권 항공권 항공권 항공권 항공권 항공권 항공권 항공권 항공권 항공권 -->
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="row mb-2">
                                         <div class="col-lg-8">
-                                            <form class="form-inline">
+                                            <form class="form-inline" action="/filghtDate" method="get">
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <label class="mr-2">날짜</label>
+                                                    <input type="text" id="selectedDate" name="selectedDate" value="2023-07-01">
+                                                </div>
                                                 <div class="form-group mx-sm-3 mb-2">
                                                     <label for="status-select" class="mr-2">가격 범위 설정</label>
-                                                    <select class="custom-select" id="status-select" onchange="filterTable_air()">
-                                                            <option selected>Choose...</option>
+                                                    <select class="custom-select" id="statusselect1" name="statusselect1">
+                                                            <option selected value="0">Choose...</option>
                                                             <option value="1">0~5만원</option>
                                                             <option value="2">5~10만원</option>
                                                             <option value="3">10~15만원</option>
@@ -447,103 +442,77 @@
                                                         </select>
                                                 </div>
                                                 <div class="form-group mx-sm-3 mb-2">
-                                                    <label for="status-select" class="mr-2">출발지 설정</label>
-                                                    <select class="custom-select" id="status-select2" onchange="filterTable_air()">
-                                                            <option selected>Choose...</option>
-                                                            <option value="1">김포</option>
-                                                            <option value="2">제주</option>
-                                                        </select>
+                                                    <label class="mr-2">출발지</label>
+                                                    <select class="custom-select" id="statusselect2" name="statusselect2">
+                                                        <option selected value='GMP'>Choose...</option>
+                                                        <option value="GMP">김포</option>
+                                                        <option value="CJU">제주</option>
+                                                    </select>
                                                 </div>
-                                                <div class="form-group mx-sm-3 mb-2">
-                                                    <label for="status-select" class="mr-2">날짜 설정</label>
-                                                        <select class="custom-select" id="date-select" onchange="filterByDate()">
-                                                            <option selected>Choose...</option>
-                                                            <script src="static/assets/js/filght_date.js"></script> 
-                                                        </select>
-                                                        
-                                                </div>
-                                                <div style="display: flex; justify-content: flex-end;">
-                                                    <div class="form-group mx-sm-3 mb-2" style="text-align: right;">
-                                                        <h4 style="display: inline;">Total: $<span id="totalAmount">{{total_amount}}</span></h4>
-                                                    </div>
-                                                </div>
-                                                <!-- <script src="static/assets/js/filght_total_price.js"></script> -->
+                                                <input class="btn btn-dark mb-2" id="filghtsubmit" type="submit" value="검색">
                                             </form>
                                         </div>
-                                        <!-- end col-->
+                                        <div class="col-lg-4">
+                                            <div style="display: flex; justify-content: flex-end;">
+                                                <div class="form-group mx-sm-3 mb-2 text-lg-right" style="text-align: right;">
+                                                    <h4 style="display: inline;">Total:<span id="totalAmount">{{total_amount}}₩</span></h4>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div style="height: 700px; overflow: auto;">
-                                    <div class="table-responsive">
-                                        <table class="table table-centered mb-0">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                    <th style="width: 20px;">
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                            <label class="custom-control-label" for="customCheck1">&nbsp;</label>
-                                                        </div>
-                                                    </th>
-                                                    <!-- <th>Order ID</th> -->
-                                                    <th>날짜</th>
-                                                    <th>요일</th>
-                                                    <th>항공사</th>
-                                                    <th>출발공항</th>
-                                                    <th>출발시각</th>
-                                                    <th>도착시각</th>
-                                                    <th>좌석</th>
-                                                    <th>가격</th>
-                                                    <!-- <th style="width: 125px;">Action</th> -->
-                                                </tr>
-                                            </thead>
-                                            
-                                            <tbody id="flight-table-body">
-                                                {% for i in range(air_data.shape[0]) %}
-                                                <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" name="flight-checkbox" class="custom-control-input" id="customCheck1{{i}}" value="{{ i }}">
-                                                            <label class="custom-control-label" for="customCheck1{{i}}">&nbsp;</label>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{air_data['date'][i]}}</td>
-                                                    <td>{{air_data['day'][i]}} </td>
-                                                    <td>{{air_data['name'][i]}}</td>
-                                                    <td>
-                                                        {{air_data['airport'][i]}}
-                                                    </td>
-                                                    <td>
-                                                        {{air_data['leavetime'][i]}}
-                                                    </td>
-                                                    <td>
-                                                        {{air_data['reachtime'][i]}}
-                                                    </td>
-                                                    <td>  
-                                                        <!-- seat이 특가석, 일반석, 비즈니스석에 따라 색을 다르게 표시. -->
-                                                        {% if air_data['seat'][i] == '특가석' %}
-                                                        <h5><span class="badge badge-danger-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
-                                                        {% elif air_data['seat'][i] == '일반석' %}
-                                                        <h5><span class="badge badge-success-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
-                                                        {% elif air_data['seat'][i] == '비즈니스석' %}
-                                                        <h5><span class="badge badge-primary-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
-                                                        {% else %}
-                                                        <h5><span class="badge badge-warning-lighten"><i class="mdi mdi-coin"></i> {{ air_data['seat'][i] }}</span></h5>
-                                                        {% endif %}     
-                                                    </td>
-                                                    <td>
-                                                        {{air_data['charge'][i]}}
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>   
-                                        </table>
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <th>날짜</th>
+                                                        <th>요일</th>
+                                                        <th>항공사</th>
+                                                        <th>출발공항</th>
+                                                        <th>출발시각</th>
+                                                        <th>도착시각</th>
+                                                        <th>좌석</th>
+                                                        <th>가격</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="flight-table-body">
+                                                    <tr>
+                                                        <!-- {% if air_list == None %}
+                                                        <td colspan="9">
+                                                            <h5>검색 결과가 없습니다.</h5>
+                                                        </td>
+                                                        {% else %}  -->
+                                                        {% for data in air_list %}
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="flight-checkbox1" class="custom-control-input" id="customCheck1{{loop.index0}}">
+                                                                <label class="custom-control-label" for="customCheck1{{loop.index0}}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ data['date'] }}</td>
+                                                        <td>{{ data['day'] }}</td>
+                                                        <td>{{ data['name'] }}</td>
+                                                        <td>{{ data['airport'] }}</td>
+                                                        <td>{{ data['leavetime'] }}</td>
+                                                        <td>{{ data['reachtime'] }}</td>
+                                                        <td>{{ data['seat'] }}</td>
+                                                        <td>{{ data['charge'] }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                    <!-- {% endif %} -->
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                    </div>
-                                    <!-- 옵션선택시 가격에 맞는 행만 출력 -->
-                                    <script src="static/assets/js/filght_air.js"></script>
-                                    <!-- 날짜옵션 선택시 해당날짜값만 출력 -->
-                                    <script src="static/assets/js/filght_date.js"></script>
                                 </div>
-                                
+
                                 <!-- end card-body-->
                             </div>
                             <!-- end card-->
@@ -551,177 +520,155 @@
                         <!-- end col -->
                     </div>
                     <!-- end row -->
-
-                </div>
-                <!-- 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 호텔 -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row mb-2">
-                                    <div class="col-lg-8">
-                                        <form class="form-inline">
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <label for="status-select" class="mr-2">가격 범위 설정</label>
-                                                <select class="custom-select" id="status-select3" onchange="filterTable_hotel()">
-                                                        <option selected>Choose...</option>
-                                                        <option value="1">0~5만원</option>
-                                                        <option value="2">5~10만원</option>
-                                                        <option value="3">10~15만원</option>
-                                                        <option value="4">15만원~20만원</option>
-                                                        <option value="5">20만원~</option>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-lg-8">
+                                            <form class="form-inline" action='/hotelprice' method="get">
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <label for="status-select" class="mr-2">가격</label>
+                                                    <select class="custom-select" id="statusselect3" name="statusselect3">
+                                                            <option selected value="0">Choose...</option>
+                                                            <option value="1">0~3만원</option>
+                                                            <option value="2">3~5만원</option>
+                                                            <option value="3">5~10만원</option>
+                                                            <option value="4">10~20만원</option>
+                                                            <option value="5">20만원~</option>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group mx-sm-3 mb-2">
+                                                    <label for="status-select" class="mr-2">지역</label>
+                                                    <select class="custom-select" id="statusselect4" name="statusselect4">
+                                                        <option selected value="제주">Choose...</option>
+                                                        <option value="제주">제주</option>
+                                                        <option value="서귀포">서귀포</option>
                                                     </select>
-                                            </div>
-                                            <div class="form-group mx-sm-3 mb-2">
-                                                <label for="status-select" class="mr-2">지역 설정</label>
-                                                <select class="custom-select" id="status-select4" onchange="filterTable_hotel()">
-                                                        <option selected>Choose...</option>
-                                                        <option value="1">제주</option>
-                                                        <option value="2">서귀포</option>
-                                                    </select>
-                                            </div>
-                                        </form>
+                                                </div>
+                                                <input class="btn btn-dark mb-2" type="submit" value="검색">
+                                            </form>
+                                        </div>
+                                        <!-- end col-->
                                     </div>
-                                    <!-- end col-->
-                                </div>
-                                <div style="height: 700px; overflow: auto;">
-                                <div class="table-responsive">
-                                    <table class="table table-centered mb-0">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th style="width: 20px;">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <!-- <th>Order ID</th> -->
-                                                <th>호텔</th>
-                                                <th>주소</th>
-                                                <th>별점</th>
-                                                <th>성급</th>
-                                                <th>가격</th>
-                                                <!-- <th style="width: 125px;">Action</th> -->
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody id="flight-table-body3">
-                                            {% for i in range(hotel_data.shape[0]) %}
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2{{i}}">
-                                                        <label class="custom-control-label" for="customCheck2{{i}}">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {{hotel_data['name'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{hotel_data['address'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{hotel_data['rating'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{hotel_data['star'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{hotel_data['price'][i]}}
-                                                </td> 
-                                            </tr>
-                                            {% endfor %}
+                                    <div style="height: 700px; overflow: auto;">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                                <label class="custom-control-label" for="customCheck2">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <!-- <th>Order ID</th> -->
+                                                        <th>호텔</th>
+                                                        <th>주소</th>
+                                                        <th>별점</th>
+                                                        <th>성급</th>
+                                                        <th>가격</th>
+                                                        <!-- <th style="width: 125px;">Action</th> -->
+                                                    </tr>
+                                                </thead>
 
-                                        </tbody>   
-                                    </table>
+                                                <tbody id="flight-table-body3">
+                                                    {% for data in hotel_list %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="flight-checkbox2" class="custom-control-input" id="customCheck2{{loop.index}}">
+                                                                <label class="custom-control-label" for="customCheck2{{loop.index}}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{data['name']}}</td>
+                                                        <td>{{data['address']}} </td>
+                                                        <td>{{data['rating']}}</td>
+                                                        <td>{{data['star']}}</td>
+                                                        <td>{{data['price']}} </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
-                                </div>
-                                <!-- 옵션선택시 가격에 맞는 행만 출력 -->
-                                <script src="static/assets/js/filght_hotel.js"></script>
-                                <script src="static/assets/js/filght_total_price.js"></script>
+                                <!-- end card-body-->
+
                             </div>
-                            <!-- end card-body-->
-                    
+                            <!-- end card-->
                         </div>
-                        <!-- end card-->
+                        <!-- end col -->
                     </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-                
-            <!-- 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카  -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div style="height: 700px; overflow: auto;">
-                                <div class="table-responsive">
-                                    <table class="table table-centered mb-0">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th style="width: 20px;">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                        <label class="custom-control-label" for="customCheck3">&nbsp;</label>
-                                                    </div>
-                                                </th>
-                                                <!-- <th>Order ID</th> -->
-                                                <th>차종류</th>                                        
-                                                <th>주유 종류</th>
-                                                <th>탑승 가능 수</th>
-                                                <th>생산일자</th>
-                                                <th>가격</th>
-                                                <th>할인가</th>
-                                                <!-- <th style="width: 125px;">Action</th> -->
-                                            </tr>
-                                        </thead>
-                                        
-                                        <tbody id="flight-table-body4">
-                                            {% for i in range(car_data.shape[0]) %}
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input customCheck3" id="customCheck3{{i}}">
-                                                        <label class="custom-control-label" for="customCheck3{{i}}">&nbsp;</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    {{car_data['carname'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{car_data['oiltype'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{car_data['seater'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{car_data['avg_year'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{car_data['avg_regular_price'][i]}}
-                                                </td>
-                                                <td>
-                                                    {{car_data['avg_discounted_price'][i]}}
-                                                </td> 
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>   
-                                    </table>
+                    <!-- 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카 렌터카  -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div style="height: 700px; overflow: auto;">
+                                        <div class="table-responsive">
+                                            <table class="table table-centered mb-0">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th style="width: 20px;">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                                <label class="custom-control-label" for="customCheck3">&nbsp;</label>
+                                                            </div>
+                                                        </th>
+                                                        <!-- <th>Order ID</th> -->
+                                                        <th>차종류</th>
+                                                        <th>주유 종류</th>
+                                                        <th>탑승 가능 수</th>
+                                                        <th>생산일자</th>
+                                                        <th>가격</th>
+                                                        <th>할인가</th>
+                                                        <!-- <th style="width: 125px;">Action</th> -->
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody id="flight-table-body4">
+                                                    {% for data in car_list %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="flight-checkbox3" class="custom-control-input" id="customCheck3{{loop.index}}">
+                                                                <label class="custom-control-label" for="customCheck3{{loop.index}}">&nbsp;</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {{data['carname']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['oiltype']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['seater']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_year']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_regular_price']}}
+                                                        </td>
+                                                        <td>
+                                                            {{data['avg_discounted_price']}}
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
+                                <!-- end card-body-->
                             </div>
-                            <!-- 총합에 렌터카 합산 -->
-                            <script src="static/assets/js/filght_total_price.js"></script>
+                            <!-- end card-->
                         </div>
-                        <!-- end card-body-->
+                        <!-- end col -->
                     </div>
-                    <!-- end card-->
                 </div>
-                <!-- end col -->
-            </div>
-        </div>
-            
- 
-        
                 <!-- End Content -->
 
                 <!-- Footer Start -->
@@ -729,7 +676,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
-                                2023 © fightproject.fly_jeju.com
+                                2023 © Fly_jeju.com
                             </div>
                             <div class="col-md-6">
                                 <div class="text-md-right footer-links d-none d-md-block">
@@ -814,6 +761,7 @@
     <!-- bundle -->
     <script src="static/assets/js/vendor.min.js"></script>
     <script src="static/assets/js/app.min.js"></script>
+    <script src="static/assets/js/filght_total_price.js"></script>
 
 </body>
 
