@@ -1,7 +1,7 @@
 ## ✅개발환경 및 기술
 |기술|소개|
 |--------|-------|
-|Back-End|Python, SQL, Flask|
+|Back-End|Python, Flask|
 |Front-end|HTML, Bootstrap, CSS, Javascript|
 |Database|BigQuery|
 |Version Control|Github, Git|
