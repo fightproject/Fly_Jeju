@@ -1,17 +1,18 @@
+# 김포-제주 극성수기 여행 경비 안내 웹 개발
+
 ## ✅개발환경 및 기술
 |기술|소개|
 |--------|-------|
-|Back-End|Python, Flask|
-|Front-end|HTML, Bootstrap, CSS, Javascript|
-|Database|BigQuery|
-|Version Control|Github, Git|
-|BI Tool|Looker Studio|
-|Project personnel|4인 프로젝트|
+|Programming & Markup Language|Python, HTML, Javascript, CSS, Bootstrap|
+|Web-framework|Flask|
+|Database & Cloud DB|BigQuery|
+|Version Control|Git|
+|Visualization Analysis|Looker|
 |project period|2023.05.15~2023.05.26|
 
 <br>
 
-## ✅김포-제주 극성수기 여행 경비 안내 웹 개발- Travel_Expense_Information_Web_Developm
+## ✅프로젝트 배경
 제주도 여행 경비를 고려했을때 고정적으로 발생하는 비용인 항공권, 숙박시설, 렌터카 요금을 합산한 금액을 간단하게 조회해볼 수 없을까 하는 의문과 아직은 항공권, 숙박, 렌터카 요금을 따로 보여주는 웹 서비스만 존재하기 때문에 이를 더 편리하게 하고자 합니다. 또한 조사결과 2030 젊은층은 해외여행을 선호하는 반면, 60대 이상 노년층은 국내에 더 관심많았습니다. 가성비 여행을 찾는 2030 젊은층의 국내 여행 증가를 위해 관광객들에게 저렴한 경비를 보다 편리하고 정확한 정보를 제공할 수 있는 서비스 필요성으로 인해 해당 프로젝트를 진행하게 되었습니다.
 국내 여행지 중 항공을 이용하여 여행을 가장 많이 가는 제주와 제주에서 출발하는 운항 중 가장 많은 도착지인 김포공항의 극성수기(7월~8월)로 범위를 선정하였습니다.
 
